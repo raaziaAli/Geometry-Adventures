@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angle Adventures · A Thinking Classroom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,600&family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#e8683d;    /* warm brick orange */
+    --butter:#f5c96b;        /* soft golden yellow */
+    --sage:#7ab89a;           /* muted sage green */
+    --lagoon:#5ba3a8;         /* dusty teal */
+    --plum:#8b5a8c;           /* soft plum */
+    --rose:#e8809a;           /* dusty rose */
+    --ink:#2d2438;            /* deep plum ink */
+    --cream:#faf3e7;          /* warm cream */
+    --chalk:#fffaf0;          /* softer chalk */
+    --shadow:0 8px 0 0 rgba(45,36,56,.9);
+    --shadow-sm:0 4px 0 0 rgba(45,36,56,.85);
+
+    /* aliases mapped to old names so nothing breaks */
+    --tangerine:var(--terracotta);
+    --sunflower:var(--butter);
+    --mint:var(--sage);
+    --sky:var(--lagoon);
+    --grape:var(--plum);
+    --coral:var(--rose);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Outfit',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    background-image:
+      radial-gradient(circle at 10% 15%, rgba(122,184,154,.22) 0, transparent 38%),
+      radial-gradient(circle at 92% 8%, rgba(139,90,140,.18) 0, transparent 35%),
+      radial-gradient(circle at 85% 90%, rgba(232,104,61,.16) 0, transparent 42%),
+      radial-gradient(circle at 5% 80%, rgba(91,163,168,.18) 0, transparent 38%);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode:multiply;
+  }
+
+  header{position:relative;padding:30px 5vw 20px;z-index:2}
+  .topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .logo{
+    font-family:'Fraunces',serif;font-weight:800;font-style:italic;
+    font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.5px;
+    background:linear-gradient(92deg,var(--coral),var(--tangerine) 35%,var(--grape));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .growth-pill{
+    background:var(--sunflower);padding:8px 16px;border:3px solid var(--ink);
+    border-radius:100px;font-weight:600;font-size:.85rem;
+    box-shadow:var(--shadow-sm);transform:rotate(-1deg);
+  }
+
+  .hero{position:relative;padding:40px 5vw 60px;z-index:2}
+  .hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;max-width:1300px;margin:0 auto}
+  @media(max-width:880px){.hero-grid{grid-template-columns:1fr}}
+
+  h1.title{
+    font-family:'Fraunces',serif;font-weight:800;
+    font-size:clamp(2.6rem,7vw,5.2rem);line-height:.95;letter-spacing:-2px;margin-bottom:20px;
+  }
+  h1.title .word1{color:var(--ink)}
+  h1.title .word2{
+    font-style:italic;color:var(--coral);
+    background:linear-gradient(180deg,transparent 60%,var(--sunflower) 60%);
+    padding:0 8px;display:inline-block;transform:rotate(-1.5deg);
+  }
+  h1.title .word3{color:var(--grape)}
+
+  .sub{font-size:clamp(1rem,1.5vw,1.15rem);max-width:540px;line-height:1.55;color:#3a3f5c;margin-bottom:28px}
+  .hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+  .chip{background:var(--chalk);border:3px solid var(--ink);padding:8px 14px;border-radius:40px;font-weight:500;font-size:.85rem;box-shadow:var(--shadow-sm)}
+  .chip.c1{background:var(--mint)}
+  .chip.c2{background:var(--sky);color:var(--ink)}
+  .chip.c3{background:var(--coral);color:var(--chalk)}
+
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;
+    padding:14px 24px;border:3px solid var(--ink);border-radius:14px;
+    cursor:pointer;box-shadow:var(--shadow);transition:transform .12s,box-shadow .12s;
+    background:var(--tangerine);color:var(--ink);
+  }
+  .btn:hover{transform:translate(2px,2px);box-shadow:var(--shadow-sm)}
+  .btn:active{transform:translate(4px,4px);box-shadow:0 0 0 0 rgba(0,0,0,0)}
+  .btn.ghost{background:var(--chalk)}
+
+  .hero-visual{position:relative;aspect-ratio:1/1;max-width:480px;margin-left:auto}
+  .hero-svg{width:100%;height:auto;overflow:visible}
+  .floater{position:absolute;font-family:'Caveat',cursive;font-size:1.6rem;font-weight:700;pointer-events:none}
+  .f1{top:5%;left:-8%;color:var(--coral);transform:rotate(-12deg)}
+  .f2{bottom:10%;right:-10%;color:var(--grape);transform:rotate(8deg)}
+  .f3{top:45%;right:-5%;color:var(--sky);transform:rotate(-5deg);font-size:1.3rem}
+
+  .mindset{
+    margin:30px 5vw 50px;background:var(--ink);color:var(--chalk);
+    border-radius:28px;padding:36px 40px;position:relative;overflow:hidden;
+    border:4px solid var(--ink);
+  }
+  .mindset::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 80% 30%, rgba(255,210,63,.18) 0, transparent 40%),
+      radial-gradient(circle at 20% 80%, rgba(61,232,187,.15) 0, transparent 40%);
+  }
+  .mindset h2{font-family:'Fraunces',serif;font-weight:600;font-style:italic;font-size:clamp(1.4rem,2.4vw,2rem);margin-bottom:14px;position:relative}
+  .mindset h2 span{background:linear-gradient(90deg,var(--sunflower),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .mindset p{font-size:1.05rem;line-height:1.6;max-width:760px;position:relative;opacity:.95}
+  .mindset-quote{display:inline-block;margin-top:18px;font-family:'Caveat',cursive;font-size:1.4rem;color:var(--sunflower);position:relative}
+
+  .section-map{padding:0 5vw 60px;position:relative;z-index:2}
+  .map-title{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(1.8rem,3.5vw,2.7rem);margin-bottom:8px;letter-spacing:-1px}
+  .map-sub{color:#3a3f5c;margin-bottom:28px;max-width:700px;line-height:1.5}
+  .tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .tab{
+    border:3px solid var(--ink);border-radius:22px;padding:24px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .14s,box-shadow .14s;
+    background:var(--chalk);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;gap:10px;min-height:170px;
+  }
+  .tab:hover{transform:translate(3px,3px);box-shadow:var(--shadow-sm)}
+  .tab.active{transform:translate(4px,4px);box-shadow:0 0 0 0 rgba(0,0,0,0)}
+  .tab .tag{font-family:'Fraunces',serif;font-weight:800;font-size:2.8rem;line-height:1;opacity:.25;position:absolute;top:10px;right:16px}
+  .tab h3{font-family:'Fraunces',serif;font-weight:800;font-size:1.2rem;letter-spacing:-.3px}
+  .tab p{font-size:.9rem;color:#3a3f5c;line-height:1.45}
+  .tab .lens{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:auto;font-family:'JetBrains Mono',monospace}
+  .tab.a{background:var(--mint)}
+  .tab.b{background:var(--sunflower)}
+  .tab.c{background:var(--sky)}
+  .tab.d{background:var(--coral);color:var(--chalk)}
+  .tab.d p{color:rgba(255,250,240,.92)}
+
+  .panel{display:none;padding:0 5vw 80px;position:relative;z-index:2;animation:fade .45s ease}
+  .panel.active{display:block}
+  .panel.subpanel{padding:0 0 40px}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  .panel-head{display:flex;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+  .panel-tag{
+    width:58px;height:58px;border:3px solid var(--ink);border-radius:18px;
+    display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:800;font-size:1.8rem;
+    box-shadow:var(--shadow-sm);transform:rotate(-3deg);
+  }
+  .panel-tag.a{background:var(--mint)}
+  .panel-tag.b{background:var(--sunflower)}
+  .panel-tag.c{background:var(--sky)}
+  .panel-tag.d{background:var(--coral);color:var(--chalk)}
+  .panel-title{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.5px}
+  .panel-sub{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#555a7a;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px}
+
+  /* sub-navigation within Section A */
+  .subnav{
+    display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;padding:14px;
+    background:var(--chalk);border:3px solid var(--ink);border-radius:18px;box-shadow:var(--shadow-sm);
+  }
+  .subnav button{
+    font-family:'Outfit',sans-serif;font-weight:600;font-size:.88rem;
+    padding:10px 16px;border:2.5px solid var(--ink);border-radius:40px;
+    cursor:pointer;background:var(--cream);color:var(--ink);transition:all .15s;
+  }
+  .subnav button:hover{background:var(--butter)}
+  .subnav button.active{background:var(--sage);color:var(--ink);box-shadow:var(--shadow-sm) inset}
+  .subpanel{display:none;padding:0;margin-top:0}
+  .subpanel.active{display:block;animation:fade .35s ease}
+  .panel.sectionA-wrap{padding:0 5vw 80px}
+  .panel.sectionA-wrap.active{display:block}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:800px){.grid-2{grid-template-columns:1fr}}
+
+  .card{background:var(--chalk);border:3px solid var(--ink);border-radius:22px;padding:24px;box-shadow:var(--shadow-sm);position:relative}
+  .card h4{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;margin-bottom:12px}
+  .card p{line-height:1.55;font-size:.98rem;color:#2c3050}
+  .card ul{padding-left:18px;line-height:1.6}
+  .card li{margin-bottom:6px;font-size:.95rem}
+  .card.accent-1{background:#fbe5d3}
+  .card.accent-2{background:#e5efe3}
+  .card.accent-3{background:#e6edee}
+  .card.accent-4{background:#f2e1e9}
+  .card.dark{background:var(--ink);color:var(--chalk)}
+  .card.dark p,.card.dark li{color:rgba(255,250,240,.92)}
+  .card.dark h4{color:var(--sunflower)}
+
+  .thinking-task{
+    background:linear-gradient(135deg,#fffaf0 0%,#fffaf0 60%,#fbe8c8 100%);
+    border:3px dashed var(--ink);border-radius:22px;padding:26px;margin:20px 0;position:relative;
+  }
+  .thinking-task::before{
+    content:"THINKING TASK";position:absolute;top:-14px;left:20px;
+    background:var(--ink);color:var(--sunflower);padding:5px 12px;
+    border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:2px;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .thinking-task h4{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;margin:6px 0 12px;letter-spacing:-.3px}
+  .thinking-task .question{font-size:1.02rem;line-height:1.6;color:#2c3050}
+  .thinking-task .question strong{background:var(--sunflower);padding:1px 6px;border-radius:5px}
+
+  .hint-group{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .hint-btn{
+    background:var(--chalk);border:2.5px solid var(--ink);
+    padding:8px 14px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.85rem;
+    transition:all .15s;
+  }
+  .hint-btn:hover{background:var(--mint)}
+  .hint{display:none;margin-top:14px;padding:14px 18px;background:var(--chalk);border-left:5px solid var(--grape);border-radius:10px;font-size:.92rem;line-height:1.55}
+  .hint.show{display:block}
+  .solution{display:none;margin-top:14px;padding:16px;background:var(--ink);color:var(--chalk);border-radius:12px;font-size:.95rem;line-height:1.55}
+  .solution.show{display:block}
+  .solution strong{color:var(--mint)}
+
+  .vocab{display:inline-block;background:var(--grape);color:var(--chalk);padding:2px 10px;border-radius:6px;font-weight:500;font-size:.88em}
+
+  .noticings{background:var(--sunflower);border:3px solid var(--ink);border-radius:22px;padding:22px 26px;margin:24px 0;transform:rotate(-.3deg);box-shadow:var(--shadow-sm)}
+  .noticings h4{font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;margin-bottom:8px}
+  .noticings ul{padding-left:18px}
+  .noticings li{margin-bottom:4px;font-size:.95rem}
+
+  .self-check{background:var(--mint);border:3px solid var(--ink);border-radius:22px;padding:22px 26px;margin:24px 0;box-shadow:var(--shadow-sm)}
+  .self-check h4{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;margin-bottom:10px}
+  .check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;cursor:pointer}
+  .check-item input{width:20px;height:20px;accent-color:var(--ink);cursor:pointer;margin-top:3px}
+  .check-item label{cursor:pointer;font-size:.95rem;line-height:1.4}
+
+  /* ====== INTERACTIVE LABS ====== */
+  .angle-lab{
+    background:var(--ink);color:var(--chalk);border-radius:22px;padding:26px;margin:24px 0;
+    border:3px solid var(--ink);
+  }
+  .angle-lab h4{font-family:'Fraunces',serif;font-weight:700;color:var(--sunflower);font-size:1.3rem;margin-bottom:8px}
+  .angle-lab p{opacity:.88;font-size:.95rem;line-height:1.5}
+  .lab-content{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;margin-top:16px}
+  @media(max-width:780px){.lab-content{grid-template-columns:1fr}}
+  .lab-svg-holder{background:var(--chalk);border-radius:16px;padding:12px;user-select:none;touch-action:none}
+  .lab-svg-holder svg{display:block;width:100%;height:auto;cursor:grab}
+  .lab-svg-holder svg:active{cursor:grabbing}
+  .lab-sidebar{display:flex;flex-direction:column;gap:12px}
+  .lab-sidebar label{font-weight:600;font-size:.88rem;color:var(--sunflower);font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+  .readouts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .readout{background:rgba(255,250,240,.07);border:1.5px dashed rgba(255,250,240,.3);border-radius:10px;padding:12px;font-size:.82rem;text-transform:uppercase;letter-spacing:1px}
+  .readout b{color:var(--mint);font-size:1.5rem;display:block;font-family:'Fraunces',serif;margin-top:4px;letter-spacing:normal}
+  .readout.full{grid-column:1/-1}
+  .drag-hint{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--coral);margin-top:6px}
+
+  /* pattern block assembler */
+  .block-tray{background:rgba(255,250,240,.06);border-radius:12px;padding:10px;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .block-tray small{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:1px;color:var(--sunflower);margin-right:8px}
+  .btn-mini{background:var(--sunflower);border:2px solid var(--ink);color:var(--ink);padding:5px 12px;border-radius:20px;cursor:pointer;font-weight:700;font-size:.78rem;font-family:'Outfit',sans-serif}
+  .btn-mini:hover{background:var(--coral);color:var(--chalk)}
+  .btn-mini.ghost{background:transparent;color:var(--chalk);border-color:var(--chalk)}
+
+  /* EQUATION BUILDER */
+  .eq-builder{background:var(--chalk);border:3px solid var(--ink);border-radius:16px;padding:18px;margin-top:14px}
+  .eq-builder h5{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:8px}
+  .eq-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:1.05rem}
+  .eq-row input[type=number]{width:70px;padding:8px 10px;border:2.5px solid var(--ink);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700}
+  .eq-row span.op{font-size:1.3rem;font-weight:700}
+  .eq-feedback{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:.9rem;display:none;line-height:1.5}
+  .eq-feedback.ok{background:var(--mint);display:block;border:2px solid var(--ink)}
+  .eq-feedback.no{background:#f7d8da;display:block;border:2px solid var(--ink)}
+
+  /* CLASSIFIER */
+  .classifier{background:var(--chalk);border:3px solid var(--ink);border-radius:16px;padding:18px;margin-top:14px}
+  .classifier h5{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:10px}
+  .classifier-items{display:flex;flex-wrap:wrap;gap:10px}
+  .c-item{background:var(--cream);border:2.5px solid var(--ink);padding:9px 14px;border-radius:20px;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .15s;user-select:none}
+  .c-item:hover{transform:translateY(-2px)}
+  .c-item.sel-comp{background:var(--sky)}
+  .c-item.sel-supp{background:var(--coral);color:var(--chalk)}
+  .c-item.sel-neither{background:var(--ink);color:var(--chalk)}
+  .c-item.sel-yes{background:var(--sage)}
+  .c-item.sel-no{background:var(--rose);color:var(--chalk)}
+  .classifier-controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
+  /* BTC cue */
+  .btc-cue{
+    display:inline-flex;gap:8px;align-items:center;
+    background:var(--grape);color:var(--chalk);padding:7px 14px;border-radius:30px;
+    font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .btc-cue::before{content:"◉";font-size:1rem}
+  .btc-cue.huddle{background:var(--coral)}
+  .btc-cue.solo{background:var(--sky);color:var(--ink)}
+
+  /* footer */
+  footer{background:var(--ink);color:var(--chalk);padding:36px 5vw;margin-top:40px;position:relative;z-index:2}
+  .foot-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+  @media(max-width:780px){.foot-grid{grid-template-columns:1fr}}
+  footer h5{font-family:'Fraunces',serif;font-weight:700;color:var(--sunflower);margin-bottom:10px;font-size:1.1rem}
+  footer p{opacity:.82;line-height:1.55;font-size:.9rem}
+  footer a{color:var(--mint);text-decoration:underline;text-underline-offset:3px}
+  .foot-credit{border-top:1px solid rgba(255,250,240,.15);margin-top:28px;padding-top:20px;font-size:.8rem;opacity:.65;text-align:center}
+
+  .spacer{height:20px}
+  .kbd{background:var(--chalk);color:var(--ink);padding:2px 8px;border-radius:6px;border:2px solid var(--ink);font-weight:600;font-size:.85em}
+
+  /* draggable handle on SVGs */
+  .drag-handle{cursor:grab}
+  .drag-handle:active{cursor:grabbing}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="logo">Angle Adventures</div>
+    <div class="growth-pill">🌱 Mistakes grow our brains</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1 class="title">
+        <span class="word1">Think.</span>
+        <span class="word2">Wonder.</span>
+        <span class="word3">Reason.</span>
+      </h1>
+      <p class="sub">
+        Welcome to a thinking classroom for Unit 7 — angles, triangles, and prisms. You won't just memorise rules here —
+        you'll build them yourself with drawings, discussions, and a healthy dose of "what if…?"
+      </p>
+      <div class="hero-chips">
+        <div class="chip c1">Visual</div>
+        <div class="chip c2">Collaborative</div>
+        <div class="chip c3">Low Floor · High Ceiling</div>
+      </div>
+      <div class="cta-row">
+        <button class="btn" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">Start exploring →</button>
+        <button class="btn ghost" onclick="document.getElementById('mindset').scrollIntoView({behavior:'smooth'})">How this works</button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <svg class="hero-svg" viewBox="0 0 400 400" aria-hidden="true">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#e8683d"/>
+            <stop offset="1" stop-color="#e8809a"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" x2="1">
+            <stop offset="0" stop-color="#7ab89a"/>
+            <stop offset="1" stop-color="#5ba3a8"/>
+          </linearGradient>
+        </defs>
+        <circle cx="200" cy="200" r="150" fill="none" stroke="#2d2438" stroke-width="4" stroke-dasharray="4 8"/>
+        <path d="M 50 200 A 150 150 0 0 1 350 200" fill="url(#g1)" opacity=".9" stroke="#2d2438" stroke-width="4"/>
+        <circle cx="200" cy="200" r="12" fill="#2d2438"/>
+        <line x1="200" y1="200" x2="50" y2="200" stroke="#2d2438" stroke-width="5" stroke-linecap="round"/>
+        <line x1="200" y1="200" x2="310" y2="90" stroke="#2d2438" stroke-width="5" stroke-linecap="round"/>
+        <line x1="200" y1="200" x2="350" y2="200" stroke="url(#g2)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 260 200 A 60 60 0 0 0 243 158" fill="none" stroke="#8b5a8c" stroke-width="4"/>
+        <text x="268" y="188" fill="#2d2438" font-size="16" font-family="Outfit">45°</text>
+        <circle cx="60" cy="60" r="12" fill="#f5c96b" stroke="#2d2438" stroke-width="3"/>
+        <circle cx="340" cy="340" r="9" fill="#7ab89a" stroke="#2d2438" stroke-width="3"/>
+      </svg>
+      <span class="floater f1">always 180° 🤯</span>
+      <span class="floater f2">notice a pattern?</span>
+      <span class="floater f3">try it!</span>
+    </div>
+  </div>
+</section>
+
+<section id="mindset" class="mindset">
+  <h2>This is a <span>thinking classroom</span>, not a copying classroom.</h2>
+  <p>
+    Every task here asks you to notice, wonder, and argue (nicely!) about what's true. Work with a partner or a
+    small random group whenever you can — talking is how your brain makes sense of new ideas. If you're stuck,
+    that's a sign your brain is learning something new. Don't rush to the answer; rush to the <em>question behind
+    the question</em>.
+  </p>
+  <span class="mindset-quote">"There is no such thing as a maths person. Just a person who hasn't practiced yet."</span>
+</section>
+
+<section id="map" class="section-map">
+  <h2 class="map-title">Unit 7 · Four sections, one geometry story ↓</h2>
+  <p class="map-sub">Each section starts with a puzzle, not a definition. You'll build the ideas yourself. Friendly order is A → B → C → D, but you can jump anywhere.</p>
+
+  <div class="tabs">
+    <div class="tab a" onclick="openPanel('a', this)">
+      <div class="tag">A</div>
+      <h3>Angle Relationships</h3>
+      <p>Special angles, adjacent &amp; non-adjacent pairs, and using equations to solve for unknowns.</p>
+      <div class="lens">Section A · Lessons 1–4</div>
+    </div>
+    <div class="tab b" onclick="openPanel('b', this)">
+      <div class="tag">B</div>
+      <h3>Drawing Polygons</h3>
+      <p>Building polygons from given side lengths &amp; angles. When is a triangle <em>unique</em>, and when isn't it?</p>
+      <div class="lens">Section B · Lessons 5–10</div>
+    </div>
+    <div class="tab c" onclick="openPanel('c', this)">
+      <div class="tag">C</div>
+      <h3>Solid Geometry</h3>
+      <p>Slicing 3D shapes, cross-sections, volume and surface area of prisms — geometry in three dimensions.</p>
+      <div class="lens">Section C · Lessons 11–15</div>
+    </div>
+    <div class="tab d" onclick="openPanel('d', this)">
+      <div class="tag">D</div>
+      <h3>Let's Put It to Work</h3>
+      <p>Real situations. Messy numbers. Everything you've learned, now working together.</p>
+      <div class="lens">Section D · Lessons 16–17</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SECTION A ============================== -->
+<section id="panel-a" class="panel sectionA-wrap">
+  <div class="panel-head">
+    <div class="panel-tag a">A</div>
+    <div>
+      <h2 class="panel-title">Angle Relationships</h2>
+      <div class="panel-sub">Section A · Four lessons on the geometry of angles</div>
+    </div>
+  </div>
+
+  <p style="margin-bottom:18px;color:#3a3f5c;max-width:760px;line-height:1.55">This section unfolds across four lessons. Pick one to begin — or move through them in order. Each one builds on the last, but every lesson starts with a puzzle you can reason through on your own.</p>
+
+  <div class="subnav" id="subnavA">
+    <button onclick="openSub('a1', this)" class="active">① Special angles</button>
+    <button onclick="openSub('a2', this)">② Adjacent angles</button>
+    <button onclick="openSub('a3', this)">③ Non-adjacent angles</button>
+    <button onclick="openSub('a4', this)">④ Unknown angles</button>
+  </div>
+
+<section id="panel-a1" class="panel subpanel">
+  <div class="panel-head">
+    <div class="panel-tag a">A</div>
+    <div>
+      <h2 class="panel-title">Relationships of Angles</h2>
+      <div class="panel-sub">Topic A · Special angles: 90°, 180°, 360°</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-2">
+      <h4>🪟 Big question</h4>
+      <p>If you can turn all the way around (360°), what happens if you turn halfway? A quarter of the way? And what do those turns have to do with the corner of a square or the point of a hexagon?</p>
+    </div>
+    <div class="card accent-1">
+      <h4>🚀 By the end of Topic A</h4>
+      <p>You'll be able to recognise 90°, 180°, and 360° angles, use pattern-block reasoning to figure out <em>any</em> regular polygon's interior angle, and find unknown angles by combining the ones you know.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue huddle">Huddle Task · standing · 4 min</div>
+    <h4>Task A1 · Who reads the protractor right?</h4>
+    <div class="question">
+      <strong>Mira</strong> measures an angle and says it's <strong>40°</strong>. <strong>Jaxon</strong> looks at the same angle and says it's <strong>140°</strong>. They used the same protractor. Neither is lying. Neither is "bad at maths."
+      <br><br>
+      <em>Can both of them be partly right? Where on the protractor does this confusion usually happen? Write a one-sentence rule so your future self never makes this mistake.</em>
+    </div>
+
+    <div class="lab-content" style="margin-top:14px">
+      <div class="lab-svg-holder" id="protractor-holder">
+        <svg viewBox="0 0 400 260" id="protractor-svg">
+          <!-- protractor body -->
+          <path d="M 40 220 A 160 160 0 0 1 360 220 L 360 220 Z" fill="#fff0e0" stroke="#2d2438" stroke-width="3"/>
+          <line x1="40" y1="220" x2="360" y2="220" stroke="#2d2438" stroke-width="3"/>
+
+          <!-- tick marks -->
+          <g id="ticks"></g>
+
+          <!-- baseline ray pointing right -->
+          <line x1="200" y1="220" x2="360" y2="220" stroke="#2d2438" stroke-width="3" stroke-dasharray="4 4" opacity=".5"/>
+
+          <!-- draggable ray -->
+          <line id="protRay" x1="200" y1="220" x2="200" y2="60" stroke="#e8809a" stroke-width="4" class="drag-handle"/>
+          <circle id="protHandle" cx="200" cy="60" r="12" fill="#f5c96b" stroke="#2d2438" stroke-width="3" class="drag-handle"/>
+
+          <!-- arc showing angle -->
+          <path id="protArc" d="" fill="none" stroke="#8b5a8c" stroke-width="3"/>
+
+          <!-- readout -->
+          <text id="protText" x="200" y="180" text-anchor="middle" font-family="Outfit" font-weight="700" font-size="18" fill="#2d2438">90°</text>
+
+          <!-- vertex -->
+          <circle cx="200" cy="220" r="5" fill="#2d2438"/>
+        </svg>
+        <div class="drag-hint" style="color:var(--ink);margin:8px 10px">↑ Drag the yellow dot to change the angle</div>
+      </div>
+      <div>
+        <div class="card accent-3" style="box-shadow:none;border-width:2.5px">
+          <h4>What to notice</h4>
+          <ul>
+            <li>Your protractor has <em>two</em> scales — inner and outer.</li>
+            <li>Reading the wrong scale flips the answer: 40° ↔ 140°, 30° ↔ 150°, and so on.</li>
+            <li>Trick: always check <em>which ray starts at zero</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solA1')">Reveal the big idea</button>
+    </div>
+    <div class="solution" id="solA1"><strong>Key idea:</strong> Both students likely read different scales on the protractor. The correct answer depends on which ray of the angle is lined up with the zero mark. <em>Rule of thumb:</em> if an angle looks acute (less than 90°), the answer should be under 90°. If it looks obtuse, it should be over 90°. Trust your eyes <em>and</em> your protractor.</div>
+  </div>
+
+  <div class="card accent-3">
+    <h4>📘 Three special angles</h4>
+    <ul>
+      <li><b>Right angle</b> — a quarter turn = <b>90°</b>. Think of a corner of a book.</li>
+      <li><b>Straight angle</b> — a half turn = <b>180°</b>. Think of a flat line with a vertex marked.</li>
+      <li><b>Full turn</b> — all the way around = <b>360°</b>. Think of a spinning top returning home.</li>
+    </ul>
+    <p style="margin-top:10px">When two angles share a vertex and a side without overlapping, we call them <span class="vocab">adjacent</span> angles. Adjacent angles can be combined — they "add up" along the rays they share.</p>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Partner Task · pattern blocks</div>
+    <h4>Task A2 · Three hexagons, one point</h4>
+    <div class="question">
+      <strong>Kaira</strong> places three regular hexagon pattern blocks so that one corner of each hexagon meets at the same point, with <strong>no gaps and no overlaps</strong>.
+      <br><br>
+      What does this tell you about the measure of <em>one</em> interior angle of a regular hexagon? After you've worked it out, use the same idea to find the interior angle of the other pattern blocks below.
+    </div>
+
+    <div class="angle-lab" style="margin-top:14px">
+      <h4>🧪 Pattern Block Lab — click to add blocks around the centre</h4>
+      <p>Stack regular polygons around a single point. Watch the total turn. Which combinations fit perfectly? What does "perfectly" tell you about the corner angles?</p>
+      <div class="lab-content">
+        <div class="lab-svg-holder" id="blockHolder">
+          <svg viewBox="0 0 400 360" id="blockSvg">
+            <!-- crosshairs -->
+            <circle cx="200" cy="180" r="200" fill="none" stroke="rgba(45,36,56,.15)" stroke-width="1" stroke-dasharray="2 6"/>
+            <line x1="0" y1="180" x2="400" y2="180" stroke="rgba(45,36,56,.1)" stroke-width="1"/>
+            <line x1="200" y1="0" x2="200" y2="360" stroke="rgba(45,36,56,.1)" stroke-width="1"/>
+            <g id="blocks"></g>
+            <circle cx="200" cy="180" r="5" fill="#2d2438"/>
+          </svg>
+        </div>
+        <div class="lab-sidebar">
+          <label>ADD A BLOCK</label>
+          <div class="block-tray">
+            <button class="btn-mini" onclick="addBlock('hex')" style="background:#7ab89a">Hexagon (120°)</button>
+            <button class="btn-mini" onclick="addBlock('square')" style="background:#f5c96b">Square (90°)</button>
+            <button class="btn-mini" onclick="addBlock('tri')" style="background:#e8683d">Triangle (60°)</button>
+            <button class="btn-mini" onclick="addBlock('rhombus')" style="background:#e8809a;color:#fff">Rhombus (60°)</button>
+            <button class="btn-mini" onclick="addBlock('trap')" style="background:#8b5a8c;color:#fff">Trapezoid (60°)</button>
+            <button class="btn-mini ghost" onclick="clearBlocks()">Clear all</button>
+          </div>
+          <div class="readouts" style="margin-top:8px">
+            <div class="readout">Blocks placed<b id="blockCount">0</b></div>
+            <div class="readout">Total angle<b id="blockTotal">0°</b></div>
+            <div class="readout full" id="blockMsg">Goal: fill exactly 360° around the point.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintA2')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solA2')">Reveal the elegant answer</button>
+    </div>
+    <div class="hint" id="hintA2">A full turn around any point is <b>360°</b>. If three identical hexagon corners fit <em>exactly</em>, each corner must be…?</div>
+    <div class="solution" id="solA2"><strong>Hexagon:</strong> 360° ÷ 3 = <strong>120°</strong>. Similarly, four squares fit perfectly around a point → each square corner = 360° ÷ 4 = <strong>90°</strong>. Six equilateral triangles fit perfectly → each triangle corner = 360° ÷ 6 = <strong>60°</strong>. So much geometry comes from <em>one</em> idea: a full turn equals 360°.</div>
+  </div>
+
+  <div class="noticings">
+    <h4>✨ What to notice</h4>
+    <ul>
+      <li>Angles around a point always total <b>360°</b>.</li>
+      <li>Angles on a straight line always total <b>180°</b>.</li>
+      <li>Two right angles combine to a straight angle. Two straight angles combine to a full turn.</li>
+    </ul>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Check in with yourself</h4>
+    <div class="check-item"><input type="checkbox" id="cA1"><label for="cA1">I can recognise a right angle, a straight angle, and a full turn.</label></div>
+    <div class="check-item"><input type="checkbox" id="cA2"><label for="cA2">I can use the fact that a full turn is 360° to figure out the angles of regular polygons.</label></div>
+    <div class="check-item"><input type="checkbox" id="cA3"><label for="cA3">I can explain what "adjacent angles" means in my own words.</label></div>
+  </div>
+</section>
+
+<!-- ============================== TOPIC B ============================== -->
+<section id="panel-a2" class="panel subpanel">
+  <div class="panel-head">
+    <div class="panel-tag b">B</div>
+    <div>
+      <h2 class="panel-title">Adjacent Angles</h2>
+      <div class="panel-sub">Topic B · Complementary &amp; supplementary</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-1">
+      <h4>🎯 Big question</h4>
+      <p>Two angles are sitting next to each other. If you know one, can you figure out the other? The answer is "only if you know how they're related." Let's find out the two most useful relationships.</p>
+    </div>
+    <div class="card accent-4">
+      <h4>🧠 Jo Boaler reminder</h4>
+      <p>"Struggle is good for your brain." If your first idea doesn't work, that's not failure — that's <em>learning</em>. Try a different drawing, measure something, or debate with a partner.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Paper-fold Task · partner</div>
+    <h4>Task B1 · The torn corner</h4>
+    <div class="question">
+      <strong>Zuri</strong> tears a rectangular piece of paper diagonally across a corner — so the corner becomes split into two smaller angles. The corner itself was originally a <strong>90°</strong> right angle. Zuri measures one of the new angles and reads <strong>35°</strong>.
+      <br><br>
+      Predict the other angle <em>without measuring</em>. Then explain <strong>why</strong> — not just what.
+    </div>
+
+    <div class="angle-lab" style="margin-top:14px">
+      <h4>🧪 Complementary Lab</h4>
+      <p>Drag the ray to split a right angle into two parts. The two parts are <em>complementary</em> — their measures add to 90°, no matter how you split it.</p>
+      <div class="lab-content">
+        <div class="lab-svg-holder" id="compHolder">
+          <svg viewBox="0 0 360 280" id="compSvg">
+            <!-- right angle marker -->
+            <rect x="60" y="220" width="14" height="14" fill="none" stroke="#2d2438" stroke-width="2" transform="translate(0,-14)"/>
+            <line x1="60" y1="220" x2="320" y2="220" stroke="#2d2438" stroke-width="3"/>
+            <line x1="60" y1="220" x2="60" y2="40" stroke="#2d2438" stroke-width="3"/>
+            <!-- filled quarter -->
+            <path d="M 60 220 L 60 100 A 120 120 0 0 1 180 220 Z" fill="rgba(61,232,187,.15)"/>
+            <!-- draggable ray inside quarter -->
+            <line id="compRay" x1="60" y1="220" x2="180" y2="100" stroke="#e8809a" stroke-width="4" class="drag-handle"/>
+            <circle id="compHandle" cx="180" cy="100" r="11" fill="#f5c96b" stroke="#2d2438" stroke-width="3" class="drag-handle"/>
+            <!-- arcs -->
+            <path id="compArc1" d="" fill="none" stroke="#7ab89a" stroke-width="3.5"/>
+            <path id="compArc2" d="" fill="none" stroke="#8b5a8c" stroke-width="3.5"/>
+            <text id="compT1" x="95" y="200" font-family="Outfit" font-size="15" font-weight="700">—</text>
+            <text id="compT2" x="75" y="135" font-family="Outfit" font-size="15" font-weight="700">—</text>
+            <circle cx="60" cy="220" r="5" fill="#2d2438"/>
+          </svg>
+          <div class="drag-hint" style="color:var(--ink);margin:8px 10px">↑ Drag the yellow dot</div>
+        </div>
+        <div class="lab-sidebar">
+          <div class="readouts">
+            <div class="readout">Angle 1<b id="compR1">—</b></div>
+            <div class="readout">Angle 2<b id="compR2">—</b></div>
+            <div class="readout full">Sum<b id="compSum">—</b></div>
+          </div>
+          <p style="font-family:'Caveat',cursive;font-size:1.15rem;color:var(--sunflower);margin-top:8px">No matter how you split a right angle — the two pieces <em>always</em> add to 90°.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solB1')">Reveal</button>
+    </div>
+    <div class="solution" id="solB1"><strong>Answer:</strong> 55°, because 35° + 55° = 90° — the full corner. Angles that add to 90° are called <strong>complementary</strong>.</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue huddle">Paper-cut Task · huddle</div>
+    <h4>Task B2 · The paper slice</h4>
+    <div class="question">
+      Your teacher hands out a small rectangular piece of paper. Starting from the middle of one long side, you cut a <em>straight line</em> all the way across to the other side. (The cut doesn't have to be perpendicular to the edge.) Your paper is now in two pieces.
+      <br><br>
+      <strong>Omari</strong> measures the angle on one of his pieces and gets <strong>70°</strong>. Without touching the other piece, predict Omari's other angle. Explain why this works for <em>any</em> cut.
+    </div>
+
+    <div class="angle-lab" style="margin-top:14px">
+      <h4>🧪 Supplementary Lab</h4>
+      <p>Drag the ray to split a straight angle. The two parts are <em>supplementary</em> — their measures always sum to 180°.</p>
+      <div class="lab-content">
+        <div class="lab-svg-holder" id="suppHolder">
+          <svg viewBox="0 0 400 220" id="suppSvg">
+            <line x1="30" y1="180" x2="370" y2="180" stroke="#2d2438" stroke-width="3"/>
+            <line id="suppRay" x1="200" y1="180" x2="200" y2="40" stroke="#e8809a" stroke-width="4" class="drag-handle"/>
+            <circle id="suppHandle" cx="200" cy="40" r="11" fill="#f5c96b" stroke="#2d2438" stroke-width="3" class="drag-handle"/>
+            <path id="suppArc1" d="" fill="none" stroke="#7ab89a" stroke-width="3.5"/>
+            <path id="suppArc2" d="" fill="none" stroke="#8b5a8c" stroke-width="3.5"/>
+            <text id="suppT1" x="120" y="155" font-family="Outfit" font-size="15" font-weight="700">—</text>
+            <text id="suppT2" x="250" y="155" font-family="Outfit" font-size="15" font-weight="700">—</text>
+            <circle cx="200" cy="180" r="5" fill="#2d2438"/>
+          </svg>
+          <div class="drag-hint" style="color:var(--ink);margin:8px 10px">↑ Drag the yellow dot</div>
+        </div>
+        <div class="lab-sidebar">
+          <div class="readouts">
+            <div class="readout">Left<b id="suppR1">—</b></div>
+            <div class="readout">Right<b id="suppR2">—</b></div>
+            <div class="readout full">Sum<b id="suppSum">—</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solB2')">Reveal</button>
+    </div>
+    <div class="solution" id="solB2"><strong>Answer:</strong> 110°, because the two angles combine along a straight line, so 70° + 110° = 180°. Angles that add to 180° are called <strong>supplementary</strong>.</div>
+  </div>
+
+  <div class="card accent-2">
+    <h4>📘 The two big words</h4>
+    <ul>
+      <li><span class="vocab">Complementary</span> — two angles that add to <b>90°</b>. (Memory trick: <em>Corner</em> begins with C.)</li>
+      <li><span class="vocab">Supplementary</span> — two angles that add to <b>180°</b>. (Memory trick: <em>Straight</em> begins with S.)</li>
+    </ul>
+    <p style="margin-top:10px"><em>Adjacent</em> complementary/supplementary angles sit side-by-side. But angles don't have to be adjacent to be complementary or supplementary — the relationship is about their <em>measures</em>, not their positions.</p>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue solo">Solo Sort · then compare</div>
+    <h4>Task B3 · Sort them out</h4>
+    <div class="question">
+      Below are pairs of angle measures. Tap each pair to classify it as <em>complementary</em>, <em>supplementary</em>, or <em>neither</em>. Then compare with your partner — did you both classify them the same way?
+    </div>
+
+    <div class="classifier">
+      <h5>Tap each pair to classify →</h5>
+      <div class="classifier-items" id="sortItems">
+        <div class="c-item" data-ans="comp" onclick="cycleClass(this)">35° and 55°</div>
+        <div class="c-item" data-ans="supp" onclick="cycleClass(this)">120° and 60°</div>
+        <div class="c-item" data-ans="comp" onclick="cycleClass(this)">12° and 78°</div>
+        <div class="c-item" data-ans="neither" onclick="cycleClass(this)">50° and 40° and 90°</div>
+        <div class="c-item" data-ans="supp" onclick="cycleClass(this)">95° and 85°</div>
+        <div class="c-item" data-ans="comp" onclick="cycleClass(this)">45° and 45°</div>
+        <div class="c-item" data-ans="supp" onclick="cycleClass(this)">180° and 0°</div>
+        <div class="c-item" data-ans="comp" onclick="cycleClass(this)">89° and 1°</div>
+      </div>
+      <div class="classifier-controls">
+        <button class="btn-mini" style="background:var(--sky)" onclick="checkSort()">Check my answers</button>
+        <button class="btn-mini ghost" style="color:var(--ink);border-color:var(--ink)" onclick="resetSort()">Reset</button>
+      </div>
+      <div class="eq-feedback" id="sortFeedback"></div>
+      <p style="font-size:.82rem;margin-top:10px;color:#555">Each tap cycles: <span style="background:var(--sky);padding:2px 8px;border-radius:6px">complementary</span> → <span style="background:var(--coral);color:#fff;padding:2px 8px;border-radius:6px">supplementary</span> → <span style="background:var(--ink);color:#fff;padding:2px 8px;border-radius:6px">neither</span> → unsorted.</p>
+    </div>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Check in with yourself</h4>
+    <div class="check-item"><input type="checkbox" id="cB1"><label for="cB1">I can tell complementary and supplementary apart without mixing them up.</label></div>
+    <div class="check-item"><input type="checkbox" id="cB2"><label for="cB2">I can find an unknown angle using the fact that adjacent angles on a line or in a corner add to 180° or 90°.</label></div>
+    <div class="check-item"><input type="checkbox" id="cB3"><label for="cB3">I know that angles don't have to be adjacent to be complementary or supplementary.</label></div>
+  </div>
+</section>
+
+<!-- ============================== TOPIC C ============================== -->
+<section id="panel-a3" class="panel subpanel">
+  <div class="panel-head">
+    <div class="panel-tag c">C</div>
+    <div>
+      <h2 class="panel-title">Nonadjacent Angles</h2>
+      <div class="panel-sub">Topic C · Vertical angles &amp; "not touching" relationships</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-3">
+      <h4>🪟 Big question</h4>
+      <p>When two straight lines cross, four angles appear. They come in <em>two pairs</em> with a secret relationship — one that holds <strong>no matter how</strong> the lines cross. Your mission: find the pattern and prove why it's always true.</p>
+    </div>
+    <div class="card dark">
+      <h4>🎯 BTC move</h4>
+      <p>This topic begs for a <em>vertical non-permanent surface</em> — a whiteboard, a window, a big sheet of butcher paper on the wall. Stand with your group. Draw big. Argue. Erase. Redraw.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue huddle">Huddle Task · vertical whiteboard · 6 min</div>
+    <h4>Task C1 · The intersection</h4>
+    <div class="question">
+      Draw two straight lines that cross at a single point. Measure all <strong>four</strong> angles around the intersection. Compare with two other groups. <em>What stays the same across every group's drawing? What changes?</em>
+    </div>
+
+    <div class="angle-lab" style="margin-top:14px">
+      <h4>🧪 Crossing Lines Lab — drag to rotate</h4>
+      <p>Rotate the pink line. Watch all four angles. Which pairs are equal to each other? Which pairs add to 180°? Make a claim before reading the reveal.</p>
+      <div class="lab-content">
+        <div class="lab-svg-holder" id="crossHolder">
+          <svg viewBox="0 0 400 300" id="crossSvg">
+            <!-- fixed horizontal -->
+            <line x1="30" y1="150" x2="370" y2="150" stroke="#2d2438" stroke-width="3"/>
+            <!-- rotating line -->
+            <line id="crossRay" x1="130" y1="40" x2="270" y2="260" stroke="#e8809a" stroke-width="3.5" class="drag-handle"/>
+            <circle id="crossHandle1" cx="130" cy="40" r="11" fill="#f5c96b" stroke="#2d2438" stroke-width="3" class="drag-handle"/>
+            <circle id="crossHandle2" cx="270" cy="260" r="11" fill="#f5c96b" stroke="#2d2438" stroke-width="3" class="drag-handle"/>
+            <!-- four arcs color-coded -->
+            <path id="arcNW" d="" fill="none" stroke="#8b5a8c" stroke-width="3"/>
+            <path id="arcNE" d="" fill="none" stroke="#7ab89a" stroke-width="3"/>
+            <path id="arcSE" d="" fill="none" stroke="#8b5a8c" stroke-width="3"/>
+            <path id="arcSW" d="" fill="none" stroke="#7ab89a" stroke-width="3"/>
+            <!-- labels -->
+            <text id="lblNW" x="" y="" font-family="Outfit" font-weight="700" font-size="14" fill="#2d2438">—</text>
+            <text id="lblNE" x="" y="" font-family="Outfit" font-weight="700" font-size="14" fill="#2d2438">—</text>
+            <text id="lblSE" x="" y="" font-family="Outfit" font-weight="700" font-size="14" fill="#2d2438">—</text>
+            <text id="lblSW" x="" y="" font-family="Outfit" font-weight="700" font-size="14" fill="#2d2438">—</text>
+            <circle cx="200" cy="150" r="5" fill="#2d2438"/>
+          </svg>
+          <div class="drag-hint" style="color:var(--ink);margin:8px 10px">↑ Drag either yellow dot</div>
+        </div>
+        <div class="lab-sidebar">
+          <div class="readouts">
+            <div class="readout"><span style="color:var(--grape)">■</span> Plum pair<b id="crossPurple">—</b></div>
+            <div class="readout"><span style="color:var(--mint)">■</span> Sage pair<b id="crossMint">—</b></div>
+            <div class="readout full">Plum + Sage<b id="crossSum">—</b></div>
+          </div>
+          <p style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--sunflower);margin-top:6px">The plum pair is always equal. The sage pair is always equal. And one plum + one sage is always 180°.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Debate Task · convince your partner</div>
+    <h4>Task C2 · Prove it, don't just show it</h4>
+    <div class="question">
+      <strong>Lena</strong> says: "The angles that sit directly across from each other at a crossing are always equal — I measured ten examples and they all worked."
+      <br><br>
+      <strong>Devansh</strong> says: "Ten examples is not a proof. What if the eleventh one breaks?" Your job: convince Devansh that this will <em>always</em> be true, using angle reasoning rather than measurement. <em>(Hint: look for pairs of supplementary angles hiding in the figure.)</em>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintC2')">Nudge 1</button>
+      <button class="hint-btn" onclick="toggle('hintC2b')">Nudge 2</button>
+      <button class="hint-btn" onclick="toggle('solC2')">See the proof</button>
+    </div>
+    <div class="hint" id="hintC2">Label the four angles a, b, c, d going around. What do angles <em>a</em> and <em>b</em> sum to? They sit on a straight line together.</div>
+    <div class="hint" id="hintC2b">a + b = 180°. But also b + c = 180° (another straight line!). What does that tell you about <em>a</em> and <em>c</em>?</div>
+    <div class="solution" id="solC2"><strong>The proof (in your own words):</strong> Label the four angles going around as a, b, c, d. Since a and b sit on a straight line: <strong>a + b = 180°</strong>. Since b and c also sit on a straight line: <strong>b + c = 180°</strong>. Both sums equal 180°, so a + b = b + c. Subtract b from both sides: <strong>a = c</strong>. The angles directly across from each other — called <span class="vocab">vertical angles</span> — must always be equal. No measurement needed. 🎯</div>
+  </div>
+
+  <div class="card accent-4">
+    <h4>📘 The new word</h4>
+    <ul>
+      <li><span class="vocab">Vertical angles</span> — the two angles directly across from each other when two lines cross. <b>They always have equal measure.</b></li>
+    </ul>
+    <p style="margin-top:10px"><em>Why the name "vertical"?</em> Not because they point up — because they share the same <b>vertex</b>. Confusing, but true. Blame the Romans.</p>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Spot-the-pair Task</div>
+    <h4>Task C3 · Finding relationships that aren't touching</h4>
+    <div class="question">
+      In the figure below, <strong>angle P = 30°</strong>. Using any mix of vertical, complementary, and supplementary reasoning, find the measures of the other labelled angles. <em>Important:</em> some of these angles are <strong>not</strong> adjacent to P — but you can still reason about them step by step.
+    </div>
+
+    <div style="display:flex;justify-content:center;margin:14px 0">
+      <svg viewBox="0 0 400 260" style="max-width:400px;width:100%;background:var(--chalk);border:2.5px solid var(--ink);border-radius:16px;padding:12px">
+        <line x1="30" y1="130" x2="370" y2="130" stroke="#2d2438" stroke-width="3"/>
+        <line x1="100" y1="30" x2="300" y2="230" stroke="#2d2438" stroke-width="3"/>
+        <line x1="200" y1="30" x2="200" y2="230" stroke="#2d2438" stroke-width="3"/>
+        <circle cx="200" cy="130" r="5" fill="#2d2438"/>
+        <text x="142" y="115" font-family="Outfit" font-size="14" font-weight="700" fill="#e8809a">P = 30°</text>
+        <text x="208" y="115" font-family="Outfit" font-size="14" font-weight="700" fill="#8b5a8c">Q</text>
+        <text x="215" y="168" font-family="Outfit" font-size="14" font-weight="700" fill="#7ab89a">R</text>
+        <text x="148" y="168" font-family="Outfit" font-size="14" font-weight="700" fill="#e8683d">S</text>
+      </svg>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintC3')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solC3')">Reveal</button>
+    </div>
+    <div class="hint" id="hintC3">Start with the angle that's vertical to P. Then use supplementary pairs along the straight lines. What about the angle where three lines meet?</div>
+    <div class="solution" id="solC3"><strong>Possible reasoning path:</strong><br>• P and R are <strong>vertical angles</strong>, so R = 30°.<br>• Q is adjacent to P along the horizontal line. But Q is formed by the vertical line, which is <strong>perpendicular</strong> to the horizontal. So the straight-angle at the top is split into P + Q = 90° (since the vertical line bisects a straight angle), giving Q = 90° − 30° = 60°.<br>• S is vertical to Q, so S = 60°.<br><em>The big idea: you never need to measure. Each angle can be deduced from the ones you already know, using only three rules — vertical, complementary, supplementary.</em></div>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Check in with yourself</h4>
+    <div class="check-item"><input type="checkbox" id="cC1"><label for="cC1">I can explain what vertical angles are without needing the textbook.</label></div>
+    <div class="check-item"><input type="checkbox" id="cC2"><label for="cC2">I can <em>prove</em> that vertical angles are always equal, not just state that they are.</label></div>
+    <div class="check-item"><input type="checkbox" id="cC3"><label for="cC3">I can find angles that are not adjacent using a chain of reasoning.</label></div>
+  </div>
+</section>
+
+<!-- ============================== TOPIC D ============================== -->
+<section id="panel-a4" class="panel subpanel">
+  <div class="panel-head">
+    <div class="panel-tag d">D</div>
+    <div>
+      <h2 class="panel-title">Solving for Unknown Angles</h2>
+      <div class="panel-sub">Topic D · Turning angle facts into equations</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-1">
+      <h4>🧮 From words to equations</h4>
+      <p>Now that you know how angles relate, you can <em>write equations</em> that capture those relationships. Algebra isn't a new monster — it's just a shorter way of saying what you already know.</p>
+    </div>
+    <div class="card dark">
+      <h4>Sentence stem ✍️</h4>
+      <p>"Because these angles are ______, I know their measures add to ______. So I can write ______ = ______. Solving gives x = ______."</p>
+      <p style="margin-top:10px;opacity:.75">Use this stem every time you set up an equation today.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue solo">Solo Start · then pair</div>
+    <h4>Task D1 · The unknown angle</h4>
+    <div class="question">
+      Two angles form a straight line. One measures <strong>64°</strong>. The other is labelled <strong>x°</strong>. Write an equation for <em>x</em>, solve it, and then explain to your partner — <em>in words only, no variables</em> — why your equation makes sense.
+    </div>
+
+    <div class="eq-builder">
+      <h5>🧮 Build the equation</h5>
+      <div class="eq-row">
+        <input type="number" id="eq1A" placeholder="64">
+        <span class="op">+</span>
+        <span>x</span>
+        <span class="op">=</span>
+        <input type="number" id="eq1B" placeholder="180">
+      </div>
+      <div class="eq-row">
+        <span>So x =</span>
+        <input type="number" id="eq1X" placeholder="?">
+        <button class="btn-mini" style="background:var(--sunflower)" onclick="checkEq1()">Check</button>
+      </div>
+      <div class="eq-feedback" id="eq1Feedback"></div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solD1')">Reveal the reasoning</button>
+    </div>
+    <div class="solution" id="solD1"><strong>Equation:</strong> 64 + x = 180 → <strong>x = 116°</strong>.<br><strong>In words:</strong> Because the two angles form a straight line, they are supplementary, so their measures together must make 180°. If one of them is 64°, the other must be 180° − 64° = 116°.</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Partner Task · stretch</div>
+    <h4>Task D2 · Algebra at the intersection</h4>
+    <div class="question">
+      Two straight lines cross. One angle is labelled <strong>(3x + 15)°</strong>. The angle vertical to it is labelled <strong>(5x − 25)°</strong>. Find <em>x</em>, then find the actual angle measure. <em>After you solve it, turn to your partner: which angle relationship did you use — and <strong>why</strong> did it let you set up the equation you did?</em>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin:14px 0">
+      <svg viewBox="0 0 340 240" style="max-width:340px;width:100%;background:var(--chalk);border:2.5px solid var(--ink);border-radius:16px;padding:12px">
+        <line x1="30" y1="50" x2="310" y2="190" stroke="#2d2438" stroke-width="3"/>
+        <line x1="30" y1="190" x2="310" y2="50" stroke="#2d2438" stroke-width="3"/>
+        <circle cx="170" cy="120" r="5" fill="#2d2438"/>
+        <text x="128" y="88" font-family="Outfit" font-size="13" font-weight="700" fill="#e8809a">(3x+15)°</text>
+        <text x="172" y="168" font-family="Outfit" font-size="13" font-weight="700" fill="#7ab89a">(5x−25)°</text>
+      </svg>
+    </div>
+
+    <div class="eq-builder">
+      <h5>🧮 Build the equation</h5>
+      <p style="font-size:.88rem;color:#555;margin-bottom:8px">Since these angles are vertical, they must be equal. Set the expressions equal to each other:</p>
+      <div class="eq-row">
+        <span>3x + 15</span>
+        <span class="op">=</span>
+        <span>5x − 25</span>
+      </div>
+      <div class="eq-row">
+        <span>x =</span>
+        <input type="number" id="eq2X" placeholder="?">
+        <button class="btn-mini" style="background:var(--sunflower)" onclick="checkEq2()">Check</button>
+      </div>
+      <div class="eq-feedback" id="eq2Feedback"></div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintD2')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solD2')">Reveal</button>
+    </div>
+    <div class="hint" id="hintD2">Vertical angles are equal. So 3x + 15 = 5x − 25. Subtract 3x, add 25, divide.</div>
+    <div class="solution" id="solD2"><strong>Solution:</strong> 3x + 15 = 5x − 25 → 40 = 2x → <strong>x = 20</strong>. Plug back in: 3(20) + 15 = <strong>75°</strong>. Both labelled angles are 75°. <em>Check:</em> the other two angles at this intersection must be 105° each, because 75° + 105° = 180°. ✓</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Rich Task · pick your entry</div>
+    <h4>Task D3 · What could these angles be?</h4>
+    <div class="question">
+      Two <em>complementary</em> angles are labelled <strong>(2x)°</strong> and <strong>(x + 30)°</strong>. List at least <strong>three different facts</strong> you can figure out — not just the value of x. Compare with your group. Did someone notice something you missed?
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solD3')">Compare with the group</button>
+    </div>
+    <div class="solution" id="solD3"><strong>Things you can figure out:</strong><br>• 2x + (x + 30) = 90, so 3x = 60, <b>x = 20</b>.<br>• The first angle = 40°, the second angle = 50°.<br>• 40° + 50° = 90° ✓ (they're complementary).<br>• Neither angle is a right angle, but together they make one.<br>• The second angle is 10° bigger than the first.<br>• Both angles are acute (less than 90°).<br><em>Your group may notice even more — great!</em></div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Design Task · open-middle</div>
+    <h4>Task D4 · Design your own figure</h4>
+    <div class="question">
+      Create a figure with at least one pair of <em>vertical angles</em>, one pair of <em>complementary angles</em>, and one pair of <em>supplementary angles</em>. Label only <strong>two</strong> of the angles with numbers. All the other angles should be findable using reasoning.
+      <br><br>
+      Trade figures with a partner. Can your partner find every angle without asking you for hints?
+    </div>
+
+    <div class="noticings">
+      <h4>✨ Success looks like…</h4>
+      <ul>
+        <li>A clean sketch with straight lines and a clear vertex.</li>
+        <li>Exactly two given numbers — not one, not three.</li>
+        <li>A partner who solves every other angle without asking for hints.</li>
+        <li>A moment where your partner says "oh — that's clever!"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card accent-4">
+    <h4>🎤 Before you leave</h4>
+    <p>Pick <em>one</em> task from today that challenged you most. Tell a classmate:</p>
+    <ul>
+      <li>What you tried first — even if it didn't work.</li>
+      <li>What you'd tell a Year 6 student about this topic, in one sentence.</li>
+      <li>A question you <em>still</em> have.</li>
+    </ul>
+    <p style="margin-top:10px"><em>Unanswered questions are gold. Hang onto them.</em></p>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Unit self-check</h4>
+    <div class="check-item"><input type="checkbox" id="cA41"><label for="cA41">I can translate an angle relationship into an equation.</label></div>
+    <div class="check-item"><input type="checkbox" id="cA42"><label for="cA42">I can solve for x <em>and</em> explain which angle fact I used.</label></div>
+    <div class="check-item"><input type="checkbox" id="cA43"><label for="cA43">I can check my answer by plugging back in.</label></div>
+    <div class="check-item"><input type="checkbox" id="cA44"><label for="cA44">I believe I can keep getting better at this with practice. 🌱</label></div>
+  </div>
+</section>
+
+</section><!-- end Section A wrapper -->
+
+<!-- ============================== SECTION B ============================== -->
+<section id="panel-b" class="panel">
+  <div class="panel-head">
+    <div class="panel-tag b">B</div>
+    <div>
+      <h2 class="panel-title">Drawing Polygons with Given Conditions</h2>
+      <div class="panel-sub">Section B · Building shapes from the ground up</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-2">
+      <h4>🪟 Big question</h4>
+      <p>If I give you three side lengths, can you always build a triangle? Sometimes the answer is yes, sometimes no, and sometimes there's <em>more than one</em> way. Your mission: figure out which is which, and why.</p>
+    </div>
+    <div class="card accent-1">
+      <h4>🚀 By the end of Section B</h4>
+      <p>You'll know when three measurements <em>force</em> a unique triangle, when they allow many triangles, and when they make no triangle at all. You'll also handle quadrilaterals and other polygons.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue huddle">Huddle Task · with straws or sticks</div>
+    <h4>Task B1 · The hinge</h4>
+    <div class="question">
+      <strong>Pari</strong> has two strips of paper, one 6 cm long and one 4 cm long. She attaches them at one end with a brad so they can swing freely — like a hinge. She asks: "As I swing the 4 cm strip around, what shape does its free end trace?"
+      <br><br>
+      Sketch the path. Then explain: if a third side has length 5 cm, can you always connect the two free ends to make a triangle? What about length 11 cm? Length 1 cm?
+    </div>
+
+    <div style="display:flex;justify-content:center;margin:14px 0">
+      <svg viewBox="0 0 360 260" style="max-width:360px;width:100%;background:var(--chalk);border:2.5px solid var(--ink);border-radius:16px;padding:12px">
+        <!-- dashed circle showing possible positions -->
+        <circle cx="120" cy="160" r="70" fill="none" stroke="#8b5a8c" stroke-width="2" stroke-dasharray="4 4"/>
+        <!-- fixed strip (6cm) from (120,160) to (260,160) -->
+        <line x1="120" y1="160" x2="260" y2="160" stroke="#e8683d" stroke-width="5" stroke-linecap="round"/>
+        <!-- swinging strip (4cm) showing 3 positions -->
+        <line x1="120" y1="160" x2="190" y2="160" stroke="#7ab89a" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+        <line x1="120" y1="160" x2="155" y2="100" stroke="#7ab89a" stroke-width="5" stroke-linecap="round" opacity=".65"/>
+        <line x1="120" y1="160" x2="90" y2="97" stroke="#7ab89a" stroke-width="5" stroke-linecap="round"/>
+        <!-- hinge -->
+        <circle cx="120" cy="160" r="7" fill="#f5c96b" stroke="#2d2438" stroke-width="2.5"/>
+        <!-- labels -->
+        <text x="175" y="180" font-family="Outfit" font-size="13" font-weight="700" fill="#2d2438">6 cm (fixed)</text>
+        <text x="70" y="85" font-family="Outfit" font-size="12" font-weight="700" fill="#2d2438">4 cm (swinging)</text>
+        <text x="45" y="230" font-family="Caveat" font-size="16" fill="#8b5a8c">...traces a circle!</text>
+      </svg>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintB1s')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solB1s')">Reveal</button>
+    </div>
+    <div class="hint" id="hintB1s">The free end of the 4 cm strip can be anywhere on a circle of radius 4 cm. The free end of the 6 cm strip sits at a fixed point, 6 cm away. To make a triangle, the third side has to reach between those two points. What's the shortest distance it could be? What's the longest?</div>
+    <div class="solution" id="solB1s"><strong>Key idea — the triangle inequality:</strong> For a triangle to exist, <b>each side must be shorter than the sum of the other two.</b><br>• Third side = 5 cm: works! (5 is between 6−4=2 and 6+4=10)<br>• Third side = 11 cm: impossible. The two shorter strips together reach only 10 cm — they can't stretch to 11.<br>• Third side = 1 cm: impossible. The 6 cm strip overshoots the 4 cm strip by more than 1 cm no matter how you swing it.<br><em>Rule of thumb:</em> the third side must be between (big − small) and (big + small).</div>
+  </div>
+
+  <div class="card accent-3">
+    <h4>📘 The Triangle Inequality</h4>
+    <p>Given any three sides, a triangle exists <strong>only if</strong>:</p>
+    <ul>
+      <li>The longest side is shorter than the sum of the other two.</li>
+      <li>Or equivalently: every side is less than the sum of the other two.</li>
+    </ul>
+    <p style="margin-top:10px"><em>Why?</em> If the longest side were longer than or equal to the sum of the other two, the two shorter sides couldn't stretch far enough to meet.</p>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue solo">Solo Sort · then share</div>
+    <h4>Task B2 · Triangle or no triangle?</h4>
+    <div class="question">
+      Below are sets of three side lengths. Tap each one to classify — <strong>makes a triangle</strong> or <strong>impossible</strong>. Explain your decisions to your partner before checking.
+    </div>
+
+    <div class="classifier">
+      <h5>Tap each set to classify →</h5>
+      <div class="classifier-items" id="triSortItems">
+        <div class="c-item" data-ans="yes" onclick="cycleTri(this)">3, 4, 5</div>
+        <div class="c-item" data-ans="no" onclick="cycleTri(this)">1, 2, 10</div>
+        <div class="c-item" data-ans="yes" onclick="cycleTri(this)">7, 7, 7</div>
+        <div class="c-item" data-ans="no" onclick="cycleTri(this)">2, 3, 5</div>
+        <div class="c-item" data-ans="yes" onclick="cycleTri(this)">6, 8, 10</div>
+        <div class="c-item" data-ans="no" onclick="cycleTri(this)">4, 5, 12</div>
+        <div class="c-item" data-ans="yes" onclick="cycleTri(this)">9, 5, 6</div>
+        <div class="c-item" data-ans="no" onclick="cycleTri(this)">1, 1, 3</div>
+      </div>
+      <div class="classifier-controls">
+        <button class="btn-mini" style="background:var(--sky)" onclick="checkTri()">Check my answers</button>
+        <button class="btn-mini ghost" style="color:var(--ink);border-color:var(--ink)" onclick="resetTri()">Reset</button>
+      </div>
+      <div class="eq-feedback" id="triFeedback"></div>
+      <p style="font-size:.82rem;margin-top:10px;color:#555">Tap cycles: <span style="background:var(--sage);padding:2px 8px;border-radius:6px">makes a triangle</span> → <span style="background:var(--rose);color:#fff;padding:2px 8px;border-radius:6px">impossible</span> → unsorted.</p>
+    </div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Partner Task · unique or many?</div>
+    <h4>Task B3 · Is there only one way?</h4>
+    <div class="question">
+      <strong>Arjun</strong> draws a triangle with sides 4, 6, and 9. <strong>Yara</strong> draws another triangle — also with sides 4, 6, and 9, but laid out differently. Can her triangle look <em>different</em> from Arjun's, or must it be the same? What about if they're only given <strong>two</strong> sides (say 4 and 6) and one angle (say 35°)? Can multiple different triangles still exist?
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintB3s')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solB3s')">Reveal</button>
+    </div>
+    <div class="hint" id="hintB3s">Try building both. With three sides given, can you wiggle anything? With two sides and one angle given — does it matter where the angle sits?</div>
+    <div class="solution" id="solB3s"><strong>Three sides (SSS):</strong> Unique! Once you fix the three side lengths, the triangle is forced — Arjun's and Yara's triangles are identical copies of each other (possibly flipped or rotated). You cannot "flex" a triangle the way you can flex a quadrilateral.<br><br><strong>Two sides + one angle:</strong> Depends! If the angle is <em>between</em> the two given sides (SAS), the triangle is unique. If the angle is <em>opposite</em> one of the given sides (SSA), you can sometimes get two different triangles — a famously tricky case. Try it: 4, 6, and 35° where 35° is opposite the side of length 4.</div>
+  </div>
+
+  <div class="card accent-4">
+    <h4>📘 Sets of conditions that force a <em>unique</em> triangle</h4>
+    <ul>
+      <li><b>SSS</b> — all three side lengths.</li>
+      <li><b>SAS</b> — two sides and the angle <em>between</em> them.</li>
+      <li><b>ASA</b> — two angles and the side <em>between</em> them.</li>
+      <li><b>AAS</b> — two angles and a side <em>not between</em> them.</li>
+    </ul>
+    <p style="margin-top:10px"><b>AAA</b> (three angles) gives you infinite similar triangles of different sizes. <b>SSA</b> sometimes gives you two different triangles.</p>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Quadrilateral Task</div>
+    <h4>Task B4 · Four sides, many shapes</h4>
+    <div class="question">
+      A rectangle has sides 6 and 3 (so side lengths 6, 3, 6, 3 in order). <strong>Mira</strong> claims: "If I use the same four side lengths, I must get the same rectangle." <strong>Jaxon</strong> disagrees. Who is right? Draw a different quadrilateral with the same four side lengths to support your side of the argument.
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solB4s')">Reveal</button>
+    </div>
+    <div class="solution" id="solB4s"><strong>Jaxon is right.</strong> Quadrilaterals are <em>floppy</em> — you can squish a rectangle into a parallelogram by "shearing" it sideways. The side lengths stay the same (6, 3, 6, 3) but the angles change. Try it with strips of cardboard and paper fasteners — a rectangle flops easily into a non-rectangular parallelogram. <em>This is why real-world structures use triangular bracing.</em> 🏗️</div>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Check in with yourself</h4>
+    <div class="check-item"><input type="checkbox" id="cB1s"><label for="cB1s">I can decide whether three given side lengths make a triangle.</label></div>
+    <div class="check-item"><input type="checkbox" id="cB2s"><label for="cB2s">I can explain why three sides force a <em>unique</em> triangle, but four sides don't force a unique quadrilateral.</label></div>
+    <div class="check-item"><input type="checkbox" id="cB3s"><label for="cB3s">I can list conditions (SSS, SAS, ASA…) that produce a unique triangle.</label></div>
+  </div>
+</section>
+
+<!-- ============================== SECTION C ============================== -->
+<section id="panel-c" class="panel">
+  <div class="panel-head">
+    <div class="panel-tag c">C</div>
+    <div>
+      <h2 class="panel-title">Solid Geometry</h2>
+      <div class="panel-sub">Section C · Slicing, volume, and surface area</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-3">
+      <h4>🪟 Big question</h4>
+      <p>If you slice through a 3D shape, what shape does the cut reveal? How much space does a 3D object take up — and how much "skin" wraps around it? Welcome to thinking in three dimensions.</p>
+    </div>
+    <div class="card dark">
+      <h4>🧠 Thinking move</h4>
+      <p>3D is hard to see on paper. Use your hands. Grab a cereal box, a soup can, a Toblerone bar. Turn them, slice them mentally, trace the faces with your finger. Geometry is physical before it's abstract.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue huddle">Huddle Task · with clay or bread</div>
+    <h4>Task C1 · The slicer</h4>
+    <div class="question">
+      <strong>Priya</strong> says: "No matter how you slice a rectangular prism, the cross section is always a rectangle."<br>
+      <strong>Mateo</strong> says: "I'm not so sure."
+      <br><br>
+      Who is right? If you disagree with Priya, describe a slice that would <em>not</em> give a rectangle. Use a block of clay or a loaf of bread — try it!
+    </div>
+
+    <div style="display:flex;justify-content:center;margin:14px 0">
+      <svg viewBox="0 0 400 230" style="max-width:400px;width:100%;background:var(--chalk);border:2.5px solid var(--ink);border-radius:16px;padding:12px">
+        <!-- isometric rectangular prism -->
+        <polygon points="60,60 200,30 280,60 140,90" fill="#e5efe3" stroke="#2d2438" stroke-width="2.5"/>
+        <polygon points="60,60 60,180 140,210 140,90" fill="#d1e1cd" stroke="#2d2438" stroke-width="2.5"/>
+        <polygon points="140,90 140,210 280,180 280,60" fill="#c2d6bd" stroke="#2d2438" stroke-width="2.5"/>
+        <!-- slanted cut -->
+        <polygon points="100,50 220,20 320,120 200,150" fill="#e8683d" opacity=".45" stroke="#e8683d" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <text x="320" y="200" font-family="Caveat" font-size="18" fill="#2d2438">slice at an angle →</text>
+      </svg>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solC1s')">Reveal</button>
+    </div>
+    <div class="solution" id="solC1s"><strong>Mateo is right.</strong> If you slice parallel to one of the faces, yes — you get a rectangle. But if you slice at an <em>angle</em>, the cross section can be a <b>parallelogram</b>, a <b>trapezoid</b>, or even a <b>pentagon</b> or <b>hexagon</b>, depending on how your cut intersects the faces of the prism. <em>Try it:</em> slice through the top face and the two opposite side faces at a slant → hexagonal cross-section!</div>
+  </div>
+
+  <div class="card accent-2">
+    <h4>📘 Cross-sections you'll meet</h4>
+    <ul>
+      <li><b>Rectangular prism</b> → slices can be rectangles, parallelograms, trapezoids, triangles, pentagons, or hexagons.</li>
+      <li><b>Cylinder</b> → slices can be circles, ellipses, or rectangles (vertical slice).</li>
+      <li><b>Cone</b> → slices can be circles, ellipses, parabolas, or triangles (the <em>conic sections</em> — ancient Greek geometry!).</li>
+      <li><b>Pyramid</b> → slices parallel to the base are smaller copies of the base; slanted cuts give trapezoids.</li>
+    </ul>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Partner Task · build &amp; measure</div>
+    <h4>Task C2 · How much fits inside?</h4>
+    <div class="question">
+      A rectangular prism is 5 cm wide, 3 cm deep, and 8 cm tall. Without any formula, can you figure out how many <strong>1 cm³ cubes</strong> you could pack inside it?
+      <br><br>
+      After your group has an answer, write a general rule. If a prism has a base area <em>B</em> and a height <em>h</em>, what's the volume?
+    </div>
+
+    <div class="eq-builder">
+      <h5>🧮 Find the volume</h5>
+      <div class="eq-row">
+        <span>V =</span>
+        <input type="number" id="volX" placeholder="?">
+        <span>cm³</span>
+        <button class="btn-mini" style="background:var(--sunflower)" onclick="checkVol()">Check</button>
+      </div>
+      <div class="eq-feedback" id="volFeedback"></div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintC2s')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solC2s')">Reveal</button>
+    </div>
+    <div class="hint" id="hintC2s">Imagine laying a single layer of cubes on the bottom — how many fit? Now how many layers tall?</div>
+    <div class="solution" id="solC2s"><strong>V = 5 × 3 × 8 = 120 cm³.</strong> The bottom layer is a 5×3 rectangle that fits 15 cubes. Stacking 8 layers gives 15 × 8 = 120 cubes. <br><br><strong>General rule:</strong> <b>V = B × h</b>, where B is the area of the base and h is the height (perpendicular to the base). This works for <em>any</em> prism — not just rectangular ones. A triangular prism, a hexagonal prism, a weird-shaped prism — all follow V = base area × height.</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Stretch · tricky base</div>
+    <h4>Task C3 · The triangular prism</h4>
+    <div class="question">
+      A prism has a triangular base — a right triangle with legs 4 cm and 6 cm. The prism is 10 cm long. Find its volume.
+      <br><br>
+      <strong>Rami</strong> says: "Just multiply 4 × 6 × 10 = 240." <strong>Esther</strong> says: "Wait — that's the volume of a rectangular box, not a triangular prism." Who's right?
+    </div>
+
+    <div class="eq-builder">
+      <h5>🧮 Volume of the triangular prism</h5>
+      <div class="eq-row">
+        <span>V =</span>
+        <input type="number" id="triVolX" placeholder="?">
+        <span>cm³</span>
+        <button class="btn-mini" style="background:var(--sunflower)" onclick="checkTriVol()">Check</button>
+      </div>
+      <div class="eq-feedback" id="triVolFeedback"></div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solC3s')">Reveal</button>
+    </div>
+    <div class="solution" id="solC3s"><strong>Esther is right.</strong> The base is a <em>triangle</em>, not a rectangle. A right triangle with legs 4 and 6 has area = ½ × 4 × 6 = 12 cm². So V = base area × height = 12 × 10 = <strong>120 cm³</strong>. That's exactly half of Rami's answer — because a triangular prism is half of a rectangular box.</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Surface Area Task</div>
+    <h4>Task C4 · Wrapping paper</h4>
+    <div class="question">
+      You want to wrap a gift box — a rectangular prism — with no overlaps and no gaps. The box is 10 cm × 6 cm × 4 cm. How much wrapping paper do you need?
+      <br><br>
+      <em>Hint: unfold the box in your mind. How many faces? What are their dimensions?</em>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin:14px 0">
+      <svg viewBox="0 0 420 260" style="max-width:420px;width:100%;background:var(--chalk);border:2.5px solid var(--ink);border-radius:16px;padding:12px">
+        <!-- Net of a rectangular prism -->
+        <rect x="130" y="30" width="120" height="70" fill="#e5efe3" stroke="#2d2438" stroke-width="2.5"/>
+        <rect x="60" y="100" width="70" height="70" fill="#f5e8d0" stroke="#2d2438" stroke-width="2.5"/>
+        <rect x="130" y="100" width="120" height="70" fill="#f2e1e9" stroke="#2d2438" stroke-width="2.5"/>
+        <rect x="250" y="100" width="70" height="70" fill="#f5e8d0" stroke="#2d2438" stroke-width="2.5"/>
+        <rect x="320" y="100" width="60" height="70" fill="#f2e1e9" stroke="#2d2438" stroke-width="2.5"/>
+        <rect x="130" y="170" width="120" height="70" fill="#e5efe3" stroke="#2d2438" stroke-width="2.5"/>
+        <text x="165" y="70" font-family="Outfit" font-size="12" font-weight="700" fill="#2d2438">top (10×6)</text>
+        <text x="76" y="140" font-family="Outfit" font-size="11" font-weight="700" fill="#2d2438">side(6×4)</text>
+        <text x="170" y="140" font-family="Outfit" font-size="12" font-weight="700" fill="#2d2438">front (10×4)</text>
+        <text x="260" y="140" font-family="Outfit" font-size="11" font-weight="700" fill="#2d2438">side(6×4)</text>
+        <text x="328" y="140" font-family="Outfit" font-size="11" font-weight="700" fill="#2d2438">back</text>
+        <text x="155" y="210" font-family="Outfit" font-size="12" font-weight="700" fill="#2d2438">bottom (10×6)</text>
+      </svg>
+    </div>
+
+    <div class="eq-builder">
+      <h5>🧮 Total surface area</h5>
+      <div class="eq-row">
+        <span>SA =</span>
+        <input type="number" id="saX" placeholder="?">
+        <span>cm²</span>
+        <button class="btn-mini" style="background:var(--sunflower)" onclick="checkSA()">Check</button>
+      </div>
+      <div class="eq-feedback" id="saFeedback"></div>
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintC4s')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solC4s')">Reveal</button>
+    </div>
+    <div class="hint" id="hintC4s">A rectangular prism has 6 faces, in 3 pairs. Find each pair's area, double it, and add.</div>
+    <div class="solution" id="solC4s"><strong>SA = 2(10×6) + 2(10×4) + 2(6×4)</strong><br>= 2(60) + 2(40) + 2(24)<br>= 120 + 80 + 48<br>= <strong>248 cm²</strong>.<br><br><em>Big idea:</em> surface area measures <em>skin</em> (2D, in cm²). Volume measures <em>filling</em> (3D, in cm³). They are different things! A huge flat pancake can have lots of surface area but little volume. A compact cube has lots of volume but relatively little surface area.</div>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Check in with yourself</h4>
+    <div class="check-item"><input type="checkbox" id="cC1s"><label for="cC1s">I can describe what shape a cross-section will be, given how a prism is sliced.</label></div>
+    <div class="check-item"><input type="checkbox" id="cC2s"><label for="cC2s">I can find the volume of any prism by multiplying base area × height.</label></div>
+    <div class="check-item"><input type="checkbox" id="cC3s"><label for="cC3s">I can find the surface area by finding the area of each face and adding them up.</label></div>
+    <div class="check-item"><input type="checkbox" id="cC4s"><label for="cC4s">I understand the difference between volume (cm³) and surface area (cm²).</label></div>
+  </div>
+</section>
+
+<!-- ============================== SECTION D ============================== -->
+<section id="panel-d" class="panel">
+  <div class="panel-head">
+    <div class="panel-tag d">D</div>
+    <div>
+      <h2 class="panel-title">Let's Put It to Work</h2>
+      <div class="panel-sub">Section D · Applying everything, in the wild</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card accent-1">
+      <h4>🌍 Big question</h4>
+      <p>The real test of understanding isn't remembering a formula — it's knowing which formula to pull out when a messy, real-world problem lands on your desk. Section D brings together everything you've learned.</p>
+    </div>
+    <div class="card dark">
+      <h4>🧗 Stretch further</h4>
+      <p>"I don't know" is a fine starting place. "I don't know <em>yet</em>" is better. These problems have many entry points — pick one and start sketching. Don't wait for the "right" method to appear.</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Applied Task · angle + polygon</div>
+    <h4>Task D1 · The crystal</h4>
+    <div class="question">
+      <strong>Noor</strong> finds a crystal in the shape of a triangular prism. The triangular base has sides 5, 12, and 13 cm — and she notices it's a right triangle. The prism is 20 cm long. 
+      <br><br>
+      Find: (a) the volume of the crystal, (b) the total surface area, and (c) the angles of the triangular base.
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('hintD1s')">Nudge</button>
+      <button class="hint-btn" onclick="toggle('solD1s')">Reveal</button>
+    </div>
+    <div class="hint" id="hintD1s">For volume: find the base area (right triangle, so ½ × leg × leg). For surface area: two triangle faces + three rectangular faces. For angles: one is 90° (right triangle), the other two must sum to 90°.</div>
+    <div class="solution" id="solD1s"><strong>(a) Volume:</strong> Base area = ½ × 5 × 12 = 30 cm². V = 30 × 20 = <strong>600 cm³</strong>.<br><strong>(b) Surface area:</strong> Two triangles (30 each) + three rectangles (5×20=100, 12×20=240, 13×20=260). Total = 60 + 100 + 240 + 260 = <strong>660 cm²</strong>.<br><strong>(c) Angles:</strong> One is 90°. Using trigonometry (or recognizing 5-12-13 as a Pythagorean triple), the other two are approximately 22.6° and 67.4°. They sum to 90°, because the angles in a triangle always total 180°.</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue huddle">Huddle Task · design problem</div>
+    <h4>Task D2 · The fish tank</h4>
+    <div class="question">
+      <strong>Farrah</strong> is designing a fish tank shaped like a rectangular prism. It must hold exactly <strong>24 litres</strong> of water (1 litre = 1000 cm³, so 24 L = 24,000 cm³). She also wants it to use as <em>little glass</em> as possible (minimum surface area — no lid).
+      <br><br>
+      Find <strong>three different sets</strong> of dimensions that hold 24 L. Which one uses the least glass? Explain your reasoning.
+    </div>
+
+    <div class="hint-group">
+      <button class="hint-btn" onclick="toggle('solD2s')">Compare with your group</button>
+    </div>
+    <div class="solution" id="solD2s"><strong>Possible tanks (all hold 24,000 cm³):</strong><br>• 20 × 20 × 60 cm → SA (no lid) = 20·20 + 2(20·60) + 2(20·60) = 400 + 4800 = 5200 cm²<br>• 30 × 40 × 20 cm → SA (no lid) = 30·40 + 2(30·20) + 2(40·20) = 1200 + 1200 + 1600 = 4000 cm²<br>• 30 × 30 × 26.67 cm → SA ≈ 900 + 2(800) + 2(800) = 4100 cm²<br><br><strong>Big idea:</strong> for a fixed volume, shapes closer to a cube tend to use less glass. Long skinny tanks waste glass. This is why soup cans and soda cans aren't super long and narrow — there's an "optimal" proportion.</div>
+  </div>
+
+  <div class="thinking-task">
+    <div class="btc-cue">Rich Task · open middle</div>
+    <h4>Task D3 · Design your own problem</h4>
+    <div class="question">
+      Invent a word problem that combines <strong>at least two</strong> of: an angle relationship, a triangle condition, a volume calculation, or a surface area calculation. Give it to your partner to solve. It should be hard enough that the answer isn't obvious, but solvable with the tools in this unit.
+    </div>
+
+    <div class="noticings">
+      <h4>✨ Success looks like…</h4>
+      <ul>
+        <li>A clear setup with no extra unnecessary numbers.</li>
+        <li>At least two concepts genuinely needed to solve it.</li>
+        <li>An answer that surprises your partner (good surprising, not mean surprising).</li>
+        <li>A moment where your partner says "oh — that's a nice problem!"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card accent-4">
+    <h4>🎤 Before you leave the unit</h4>
+    <p>Pick one task from this entire unit that challenged you most. Tell a classmate:</p>
+    <ul>
+      <li>What you tried first — even if it didn't work.</li>
+      <li>What idea finally clicked.</li>
+      <li>A question you <em>still</em> have.</li>
+    </ul>
+    <p style="margin-top:10px"><em>Unanswered questions are gold. Hang onto them.</em></p>
+  </div>
+
+  <div class="self-check">
+    <h4>✓ Unit 7 final self-check</h4>
+    <div class="check-item"><input type="checkbox" id="cDf1"><label for="cDf1">I can use angle relationships to find unknown angles.</label></div>
+    <div class="check-item"><input type="checkbox" id="cDf2"><label for="cDf2">I can tell whether a given set of conditions produces a unique triangle.</label></div>
+    <div class="check-item"><input type="checkbox" id="cDf3"><label for="cDf3">I can find the volume and surface area of a prism.</label></div>
+    <div class="check-item"><input type="checkbox" id="cDf4"><label for="cDf4">I can combine ideas from different lessons to solve a messy real-world problem.</label></div>
+    <div class="check-item"><input type="checkbox" id="cDf5"><label for="cDf5">I believe I can keep getting better at this with practice. 🌱</label></div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER / CREDITS ============================== -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <h5>About this platform</h5>
+      <p>Angle Adventures is a learning experience designed for middle school students exploring angles and angle relationships. It blends a <strong>growth-mindset approach</strong> (inspired by the work of Jo Boaler and the youcubed team at Stanford) with a <strong>thinking-classroom</strong> structure (based on the research of Peter Liljedahl in <em>Building Thinking Classrooms in Mathematics</em>).</p>
+    </div>
+    <div>
+      <h5>Pedagogy at a glance</h5>
+      <p>Tasks are designed with a low floor and a high ceiling. Students are encouraged to talk, sketch on non-permanent surfaces, and defer direct instruction until after productive struggle. Hints are mild and tiered; solutions are never the first move.</p>
+    </div>
+    <div>
+      <h5>Curriculum credit</h5>
+      <p>The four-section structure of this unit (Angle Relationships, Drawing Polygons with Given Conditions, Solid Geometry, and Let's Put It to Work) follows the organisation of Grade 7 Unit 7 — "Angles, Triangles, and Prisms" — from the open-licensed middle school mathematics curriculum by <a href="https://openupresources.org">Open Up Resources</a> / <a href="https://illustrativemathematics.org">Illustrative Mathematics</a>, licensed under CC BY 4.0. Character names, visual design, interactive tools, and task framings have been rewritten for this platform.</p>
+    </div>
+  </div>
+  <div class="foot-credit">
+    Built for curious brains · Remix friendly · Angle Adventures © A learning playground.
+  </div>
+</footer>
+
+<script>
+  // ===== Panel switching =====
+  function openPanel(id, el){
+    // Only hide top-level panels (not subpanels)
+    document.querySelectorAll('.panel:not(.subpanel)').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+    // If opening Section A, make sure first sub-lesson is active
+    if(id==='a'){
+      document.querySelectorAll('#panel-a .subpanel').forEach(p=>p.classList.remove('active'));
+      document.getElementById('panel-a1').classList.add('active');
+      document.querySelectorAll('#subnavA button').forEach(b=>b.classList.remove('active'));
+      document.querySelector('#subnavA button').classList.add('active');
+    }
+    setTimeout(()=>document.getElementById('panel-'+id).scrollIntoView({behavior:'smooth', block:'start'}),80);
+  }
+
+  function openSub(id, el){
+    document.querySelectorAll('#panel-a .subpanel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+    document.querySelectorAll('#subnavA button').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function toggle(id){
+    document.getElementById(id).classList.toggle('show');
+  }
+
+  // ===== Triangle-sort classifier (Section B) =====
+  function cycleTri(el){
+    const states=['','sel-yes','sel-no'];
+    let currentIdx=0;
+    for(let i=1;i<states.length;i++){
+      if(el.classList.contains(states[i])){ currentIdx=i; break; }
+    }
+    el.classList.remove('sel-yes','sel-no');
+    const nextIdx=(currentIdx+1)%states.length;
+    if(states[nextIdx]) el.classList.add(states[nextIdx]);
+    el.dataset.state=states[nextIdx]||'';
+    el.style.outline='';
+  }
+  function checkTri(){
+    const items=document.querySelectorAll('#triSortItems .c-item');
+    let correct=0, total=items.length;
+    items.forEach(i=>{
+      const state=i.dataset.state||'';
+      const answer=i.dataset.ans;
+      const stateKey = state==='sel-yes'?'yes':state==='sel-no'?'no':'';
+      if(stateKey===answer){ correct++; i.style.outline='3px solid #2d2438' }
+      else { i.style.outline='3px solid #e8809a' }
+    });
+    const fb=document.getElementById('triFeedback');
+    if(correct===total){
+      fb.className='eq-feedback ok';
+      fb.textContent=`🎉 All ${total} correct! Remember: the longest side must be shorter than the sum of the other two.`;
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent=`${correct} of ${total} correct. Check the ones outlined in pink — does the longest side beat the sum of the other two?`;
+    }
+  }
+  function resetTri(){
+    document.querySelectorAll('#triSortItems .c-item').forEach(i=>{
+      i.classList.remove('sel-yes','sel-no');
+      i.style.outline=''; i.dataset.state='';
+    });
+    document.getElementById('triFeedback').className='eq-feedback';
+  }
+
+  // ===== Volume, Triangle Volume, Surface Area checks (Section C) =====
+  function checkVol(){
+    const v=parseFloat(document.getElementById('volX').value);
+    const fb=document.getElementById('volFeedback');
+    if(isNaN(v)){ fb.className='eq-feedback no'; fb.textContent='Enter a number.'; return; }
+    if(Math.abs(v-120)<0.001){
+      fb.className='eq-feedback ok';
+      fb.textContent='🎉 Yes! V = 5 × 3 × 8 = 120 cm³. A bottom layer of 15 cubes, stacked 8 high.';
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent='Not quite. Multiply all three dimensions: 5 × 3 × 8.';
+    }
+  }
+  function checkTriVol(){
+    const v=parseFloat(document.getElementById('triVolX').value);
+    const fb=document.getElementById('triVolFeedback');
+    if(isNaN(v)){ fb.className='eq-feedback no'; fb.textContent='Enter a number.'; return; }
+    if(Math.abs(v-120)<0.001){
+      fb.className='eq-feedback ok';
+      fb.textContent='🎉 Yes! Base area = ½ × 4 × 6 = 12 cm². V = 12 × 10 = 120 cm³.';
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent='Not quite. The base is a triangle — its area is ½ × leg × leg. Then multiply by the length.';
+    }
+  }
+  function checkSA(){
+    const sa=parseFloat(document.getElementById('saX').value);
+    const fb=document.getElementById('saFeedback');
+    if(isNaN(sa)){ fb.className='eq-feedback no'; fb.textContent='Enter a number.'; return; }
+    if(Math.abs(sa-248)<0.001){
+      fb.className='eq-feedback ok';
+      fb.textContent='🎉 Yes! SA = 2(60) + 2(40) + 2(24) = 248 cm². Six faces in three pairs.';
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent='Not quite. The box has 6 faces in 3 matching pairs: top/bottom (10×6), front/back (10×4), two sides (6×4).';
+    }
+  }
+
+  // ===== DRAGGABLE SVG HELPER =====
+  // Given an SVG, a handle element, and a callback that receives (x,y) in SVG coords,
+  // wire up pointer events.
+  function makeDraggable(svg, handle, onDrag){
+    let dragging=false;
+    function getSvgPoint(evt){
+      const pt=svg.createSVGPoint();
+      const e=evt.touches?evt.touches[0]:evt;
+      pt.x=e.clientX; pt.y=e.clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+    function start(e){dragging=true; e.preventDefault()}
+    function move(e){
+      if(!dragging) return;
+      const p=getSvgPoint(e);
+      onDrag(p.x,p.y);
+      e.preventDefault();
+    }
+    function end(){dragging=false}
+    handle.addEventListener('mousedown',start);
+    handle.addEventListener('touchstart',start,{passive:false});
+    window.addEventListener('mousemove',move);
+    window.addEventListener('touchmove',move,{passive:false});
+    window.addEventListener('mouseup',end);
+    window.addEventListener('touchend',end);
+  }
+
+  // ===== PROTRACTOR (Task A1) =====
+  function initProtractor(){
+    const svg=document.getElementById('protractor-svg');
+    const ray=document.getElementById('protRay');
+    const handle=document.getElementById('protHandle');
+    const arc=document.getElementById('protArc');
+    const txt=document.getElementById('protText');
+    const ticks=document.getElementById('ticks');
+    const cx=200, cy=220, r=160, R_handle=158;
+
+    // draw ticks
+    for(let a=0;a<=180;a+=10){
+      const rad=(180-a)*Math.PI/180;
+      const x1=cx+r*Math.cos(rad), y1=cy-r*Math.sin(rad);
+      const rIn = a%30===0 ? r-14 : r-7;
+      const x2=cx+rIn*Math.cos(rad), y2=cy-rIn*Math.sin(rad);
+      const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+      line.setAttribute("x1",x1); line.setAttribute("y1",y1);
+      line.setAttribute("x2",x2); line.setAttribute("y2",y2);
+      line.setAttribute("stroke","#2d2438");
+      line.setAttribute("stroke-width", a%30===0?2:1);
+      ticks.appendChild(line);
+      if(a%30===0){
+        const tr=r-26;
+        const tx=cx+tr*Math.cos(rad), ty=cy-tr*Math.sin(rad);
+        const label=document.createElementNS("http://www.w3.org/2000/svg","text");
+        label.setAttribute("x",tx); label.setAttribute("y",ty+4);
+        label.setAttribute("text-anchor","middle");
+        label.setAttribute("font-family","Outfit");
+        label.setAttribute("font-size","10");
+        label.setAttribute("fill","#2d2438");
+        label.textContent=a;
+        ticks.appendChild(label);
+      }
+    }
+
+    function update(angleDeg){
+      angleDeg=Math.max(5,Math.min(175,angleDeg));
+      const rad=(180-angleDeg)*Math.PI/180;
+      const x=cx+R_handle*Math.cos(rad);
+      const y=cy-R_handle*Math.sin(rad);
+      ray.setAttribute("x2",x);
+      ray.setAttribute("y2",y);
+      handle.setAttribute("cx",x);
+      handle.setAttribute("cy",y);
+      // arc from 0° mark toward ray
+      const arcR=50;
+      const startX=cx+arcR, startY=cy;
+      const endX=cx+arcR*Math.cos(rad), endY=cy-arcR*Math.sin(rad);
+      const large=angleDeg>180?1:0;
+      arc.setAttribute("d",`M ${startX} ${startY} A ${arcR} ${arcR} 0 ${large} 0 ${endX} ${endY}`);
+      txt.textContent=Math.round(angleDeg)+"°";
+      txt.setAttribute("x", cx);
+      txt.setAttribute("y", cy-15);
+    }
+    update(90);
+
+    makeDraggable(svg,handle,(x,y)=>{
+      const dx=x-cx, dy=cy-y;
+      let rad=Math.atan2(dy,dx);
+      let deg=rad*180/Math.PI;
+      // degrees from right-baseline counterclockwise
+      deg=180-deg;
+      update(deg);
+    });
+    makeDraggable(svg,ray,(x,y)=>{
+      const dx=x-cx, dy=cy-y;
+      let rad=Math.atan2(dy,dx);
+      let deg=rad*180/Math.PI;
+      deg=180-deg;
+      update(deg);
+    });
+  }
+
+  // ===== PATTERN BLOCK LAB (Task A2) =====
+  const blockDef={
+    hex:     {color:'#7ab89a', angle:120, label:'H'},
+    square:  {color:'#f5c96b', angle:90,  label:'S'},
+    tri:     {color:'#e8683d', angle:60,  label:'T'},
+    rhombus: {color:'#e8809a', angle:60,  label:'R'},
+    trap:    {color:'#8b5a8c', angle:60,  label:'Z'},
+  };
+  let currentAngleUsed=0;
+  function addBlock(type){
+    const g=document.getElementById('blocks');
+    const def=blockDef[type];
+    if(currentAngleUsed+def.angle>360.1){
+      flashMsg("Not enough room — that would overflow 360°. Try Clear or a smaller block.");
+      return;
+    }
+    const startDeg=currentAngleUsed;
+    const endDeg=currentAngleUsed+def.angle;
+    // draw a wedge of the block's color
+    const cx=200, cy=180, r=90;
+    const a1=(startDeg-90)*Math.PI/180;
+    const a2=(endDeg-90)*Math.PI/180;
+    const x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    const x2=cx+r*Math.cos(a2), y2=cy+r*Math.sin(a2);
+    const large=def.angle>180?1:0;
+    const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+    path.setAttribute("d",`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`);
+    path.setAttribute("fill",def.color);
+    path.setAttribute("stroke","#2d2438");
+    path.setAttribute("stroke-width","2.5");
+    g.appendChild(path);
+    // label
+    const midA=(startDeg+def.angle/2-90)*Math.PI/180;
+    const lx=cx+(r*.6)*Math.cos(midA), ly=cy+(r*.6)*Math.sin(midA);
+    const txt=document.createElementNS("http://www.w3.org/2000/svg","text");
+    txt.setAttribute("x",lx); txt.setAttribute("y",ly+4);
+    txt.setAttribute("text-anchor","middle");
+    txt.setAttribute("font-family","Outfit");
+    txt.setAttribute("font-weight","700");
+    txt.setAttribute("font-size","14");
+    txt.setAttribute("fill","#2d2438");
+    txt.textContent=def.label+"·"+def.angle+"°";
+    g.appendChild(txt);
+    currentAngleUsed=endDeg;
+    updateBlockReadout();
+  }
+  function clearBlocks(){
+    document.getElementById('blocks').innerHTML='';
+    currentAngleUsed=0;
+    updateBlockReadout();
+  }
+  function updateBlockReadout(){
+    const count=document.getElementById('blocks').querySelectorAll('path').length;
+    document.getElementById('blockCount').textContent=count;
+    document.getElementById('blockTotal').textContent=Math.round(currentAngleUsed)+"°";
+    const msg=document.getElementById('blockMsg');
+    if(currentAngleUsed===0){
+      msg.textContent="Goal: fill exactly 360° around the point.";
+      msg.style.background="rgba(255,250,240,.07)";
+    } else if(Math.abs(currentAngleUsed-360)<0.1){
+      msg.textContent="🎉 Perfect! The angles around the point sum to exactly 360°.";
+      msg.style.background="rgba(122,184,154,.3)";
+    } else if(currentAngleUsed<360){
+      msg.textContent=(360-currentAngleUsed)+"° remaining to fill the full turn.";
+      msg.style.background="rgba(245,201,107,.2)";
+    }
+  }
+  function flashMsg(m){
+    const msg=document.getElementById('blockMsg');
+    msg.textContent=m;
+    msg.style.background="rgba(232,128,154,.3)";
+    setTimeout(updateBlockReadout,1800);
+  }
+
+  // ===== COMPLEMENTARY LAB (Task B1) =====
+  function initCompLab(){
+    const svg=document.getElementById('compSvg');
+    const ray=document.getElementById('compRay');
+    const handle=document.getElementById('compHandle');
+    const arc1=document.getElementById('compArc1');
+    const arc2=document.getElementById('compArc2');
+    const t1=document.getElementById('compT1');
+    const t2=document.getElementById('compT2');
+    const r1=document.getElementById('compR1');
+    const r2=document.getElementById('compR2');
+    const sum=document.getElementById('compSum');
+    const cx=60, cy=220, L=160;
+
+    function update(angleDeg){
+      angleDeg=Math.max(5,Math.min(85,angleDeg));
+      const a1=angleDeg;          // measured from horizontal right
+      const a2=90-angleDeg;
+      const rad=a1*Math.PI/180;
+      const x=cx+L*Math.cos(rad);
+      const y=cy-L*Math.sin(rad);
+      ray.setAttribute("x2",x);
+      ray.setAttribute("y2",y);
+      handle.setAttribute("cx",x);
+      handle.setAttribute("cy",y);
+      const R=45;
+      // arc 1: from (cx+R,cy) CCW to ray direction
+      const endX=cx+R*Math.cos(rad), endY=cy-R*Math.sin(rad);
+      arc1.setAttribute("d",`M ${cx+R} ${cy} A ${R} ${R} 0 0 0 ${endX} ${endY}`);
+      // arc 2: from ray direction CCW to (cx,cy-R)
+      arc2.setAttribute("d",`M ${endX} ${endY} A ${R} ${R} 0 0 0 ${cx} ${cy-R}`);
+      t1.textContent=Math.round(a1)+"°";
+      t2.textContent=Math.round(a2)+"°";
+      r1.textContent=Math.round(a1)+"°";
+      r2.textContent=Math.round(a2)+"°";
+      sum.textContent=(Math.round(a1)+Math.round(a2))+"°";
+    }
+    update(40);
+
+    function dragTo(x,y){
+      const dx=x-cx, dy=cy-y;
+      let rad=Math.atan2(dy,dx);
+      let deg=rad*180/Math.PI;
+      update(deg);
+    }
+    makeDraggable(svg,handle,dragTo);
+    makeDraggable(svg,ray,dragTo);
+  }
+
+  // ===== SUPPLEMENTARY LAB (Task B2) =====
+  function initSuppLab(){
+    const svg=document.getElementById('suppSvg');
+    const ray=document.getElementById('suppRay');
+    const handle=document.getElementById('suppHandle');
+    const arc1=document.getElementById('suppArc1');
+    const arc2=document.getElementById('suppArc2');
+    const t1=document.getElementById('suppT1');
+    const t2=document.getElementById('suppT2');
+    const r1=document.getElementById('suppR1');
+    const r2=document.getElementById('suppR2');
+    const sum=document.getElementById('suppSum');
+    const cx=200, cy=180, L=140;
+
+    function update(angleDeg){
+      angleDeg=Math.max(10,Math.min(170,angleDeg));
+      const a1=angleDeg;
+      const a2=180-angleDeg;
+      const rad=a1*Math.PI/180;
+      const x=cx-L*Math.cos(rad);
+      const y=cy-L*Math.sin(rad);
+      // Actually let's redefine: a1 is the angle on the LEFT of the ray (between -x axis and ray)
+      // Put ray pointing somewhere in the upper half-plane
+      const rad2=(180-angleDeg)*Math.PI/180; // measured CCW from +x axis
+      const x2=cx+L*Math.cos(rad2);
+      const y2=cy-L*Math.sin(rad2);
+      ray.setAttribute("x2",x2);
+      ray.setAttribute("y2",y2);
+      handle.setAttribute("cx",x2);
+      handle.setAttribute("cy",y2);
+      const R=45;
+      // left arc (a1): from (cx-R,cy) CCW to ray direction
+      const endX=cx+R*Math.cos(rad2), endY=cy-R*Math.sin(rad2);
+      arc1.setAttribute("d",`M ${cx-R} ${cy} A ${R} ${R} 0 0 1 ${endX} ${endY}`);
+      // right arc (a2): from ray direction CCW to (cx+R,cy)
+      arc2.setAttribute("d",`M ${endX} ${endY} A ${R} ${R} 0 0 1 ${cx+R} ${cy}`);
+      t1.textContent=Math.round(a1)+"°";
+      t2.textContent=Math.round(a2)+"°";
+      r1.textContent=Math.round(a1)+"°";
+      r2.textContent=Math.round(a2)+"°";
+      sum.textContent=(Math.round(a1)+Math.round(a2))+"°";
+    }
+    update(90);
+
+    function dragTo(x,y){
+      const dx=x-cx, dy=cy-y;
+      let rad=Math.atan2(dy,dx);
+      let deg=rad*180/Math.PI;
+      // deg is measured CCW from +x. a1 is measured CCW from -x axis (left side), so a1 = 180 - deg
+      let a1=180-deg;
+      update(a1);
+    }
+    makeDraggable(svg,handle,dragTo);
+    makeDraggable(svg,ray,dragTo);
+  }
+
+  // ===== CLASSIFIER (Task B3) =====
+  function cycleClass(el){
+    const states=['','sel-comp','sel-supp','sel-neither'];
+    // find current state
+    let currentIdx=0;
+    for(let i=1;i<states.length;i++){
+      if(el.classList.contains(states[i])){ currentIdx=i; break; }
+    }
+    // remove all
+    el.classList.remove('sel-comp','sel-supp','sel-neither');
+    // advance to next
+    const nextIdx=(currentIdx+1)%states.length;
+    if(states[nextIdx]) el.classList.add(states[nextIdx]);
+    el.dataset.state=states[nextIdx]||'';
+    el.style.outline=''; // clear any check marks
+  }
+  function checkSort(){
+    const items=document.querySelectorAll('#sortItems .c-item');
+    let correct=0, total=items.length;
+    items.forEach(i=>{
+      const state=i.dataset.state||'';
+      const answer=i.dataset.ans;
+      const stateKey = state==='sel-comp'?'comp':state==='sel-supp'?'supp':state==='sel-neither'?'neither':'';
+      if(stateKey===answer){ correct++; i.style.outline='3px solid #2d2438'}
+      else { i.style.outline='3px solid #e8809a'}
+    });
+    const fb=document.getElementById('sortFeedback');
+    if(correct===total){
+      fb.className='eq-feedback ok';
+      fb.textContent=`🎉 Perfect — all ${total} correct! Notice: 50°+40°+90° sums to 180° but it's three angles, not a pair. And 89°+1° may look uneven but adds to exactly 90°.`;
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent=`${correct} out of ${total} correct. Check the ones outlined in pink — do they add to 90°, 180°, or neither?`;
+    }
+  }
+  function resetSort(){
+    document.querySelectorAll('#sortItems .c-item').forEach(i=>{
+      i.classList.remove('sel-comp','sel-supp','sel-neither');
+      i.style.outline='';
+      i.dataset.state='';
+    });
+    document.getElementById('sortFeedback').className='eq-feedback';
+  }
+
+  // ===== CROSSING LINES LAB (Task C1) =====
+  function initCrossLab(){
+    const svg=document.getElementById('crossSvg');
+    const ray=document.getElementById('crossRay');
+    const h1=document.getElementById('crossHandle1');
+    const h2=document.getElementById('crossHandle2');
+    const arcNW=document.getElementById('arcNW');
+    const arcNE=document.getElementById('arcNE');
+    const arcSE=document.getElementById('arcSE');
+    const arcSW=document.getElementById('arcSW');
+    const lNW=document.getElementById('lblNW');
+    const lNE=document.getElementById('lblNE');
+    const lSE=document.getElementById('lblSE');
+    const lSW=document.getElementById('lblSW');
+    const rPurple=document.getElementById('crossPurple');
+    const rMint=document.getElementById('crossMint');
+    const rSum=document.getElementById('crossSum');
+    const cx=200, cy=150, L=110;
+
+    function update(angleDeg){
+      angleDeg=Math.max(15,Math.min(165,angleDeg));
+      const rad=angleDeg*Math.PI/180;
+      // rotating line crosses center at angle `angleDeg` from horizontal
+      const x1=cx-L*Math.cos(rad), y1=cy+L*Math.sin(rad);
+      const x2=cx+L*Math.cos(rad), y2=cy-L*Math.sin(rad);
+      ray.setAttribute("x1",x1); ray.setAttribute("y1",y1);
+      ray.setAttribute("x2",x2); ray.setAttribute("y2",y2);
+      h1.setAttribute("cx",x2); h1.setAttribute("cy",y2);
+      h2.setAttribute("cx",x1); h2.setAttribute("cy",y1);
+
+      const small=angleDeg;         // one pair
+      const large=180-angleDeg;     // other pair
+      // NE and SW arcs are "small" = the angle between +x axis and rotated ray going up
+      // When rotating line has positive slope up (rad<90), small angle is on top-right (NE) and bottom-left (SW)
+      // NW and SE arcs are "large"
+      // Be explicit:
+      const R=38;
+      // NE arc: from +x direction CCW to ray direction (going up-right)
+      // ray up direction: angle = angleDeg from +x
+      arcNE.setAttribute("d",`M ${cx+R} ${cy} A ${R} ${R} 0 0 0 ${cx+R*Math.cos(rad)} ${cy-R*Math.sin(rad)}`);
+      // NW arc: from ray up CCW to -x
+      arcNW.setAttribute("d",`M ${cx+R*Math.cos(rad)} ${cy-R*Math.sin(rad)} A ${R} ${R} 0 0 0 ${cx-R} ${cy}`);
+      // SW arc: from -x CCW to ray down
+      arcSW.setAttribute("d",`M ${cx-R} ${cy} A ${R} ${R} 0 0 0 ${cx-R*Math.cos(rad)} ${cy+R*Math.sin(rad)}`);
+      // SE arc: from ray down CCW to +x
+      arcSE.setAttribute("d",`M ${cx-R*Math.cos(rad)} ${cy+R*Math.sin(rad)} A ${R} ${R} 0 0 0 ${cx+R} ${cy}`);
+
+      // colors: NE and SW are the same pair (teal = `small`), NW and SE same (purple = `large`)
+      arcNE.setAttribute('stroke','#7ab89a');
+      arcSW.setAttribute('stroke','#7ab89a');
+      arcNW.setAttribute('stroke','#8b5a8c');
+      arcSE.setAttribute('stroke','#8b5a8c');
+
+      // labels positioned just outside arcs
+      const LR=58;
+      lNE.setAttribute("x",cx+LR*Math.cos(rad/2));
+      lNE.setAttribute("y",cy-LR*Math.sin(rad/2)+5);
+      lNE.textContent=Math.round(small)+"°";
+      lNE.setAttribute("fill","#2d2438");
+
+      const midLarge=(rad+Math.PI)/2;
+      lNW.setAttribute("x",cx+LR*Math.cos(midLarge)-10);
+      lNW.setAttribute("y",cy-LR*Math.sin(midLarge)+5);
+      lNW.textContent=Math.round(large)+"°";
+      lNW.setAttribute("fill","#2d2438");
+
+      lSW.setAttribute("x",cx-LR*Math.cos(rad/2)-20);
+      lSW.setAttribute("y",cy+LR*Math.sin(rad/2)+5);
+      lSW.textContent=Math.round(small)+"°";
+      lSW.setAttribute("fill","#2d2438");
+
+      lSE.setAttribute("x",cx-LR*Math.cos(midLarge)+5);
+      lSE.setAttribute("y",cy+LR*Math.sin(midLarge)+5);
+      lSE.textContent=Math.round(large)+"°";
+      lSE.setAttribute("fill","#2d2438");
+
+      rPurple.textContent=Math.round(large)+"°";
+      rMint.textContent=Math.round(small)+"°";
+      rSum.textContent=(Math.round(small)+Math.round(large))+"°";
+    }
+    update(55);
+
+    function dragTo(x,y){
+      const dx=x-cx, dy=cy-y;
+      let rad=Math.atan2(dy,dx);
+      let deg=rad*180/Math.PI;
+      if(deg<0) deg+=180;
+      update(deg);
+    }
+    makeDraggable(svg,h1,dragTo);
+    makeDraggable(svg,h2,dragTo);
+    makeDraggable(svg,ray,dragTo);
+  }
+
+  // ===== EQUATION CHECKERS =====
+  function checkEq1(){
+    const x=parseFloat(document.getElementById('eq1X').value);
+    const fb=document.getElementById('eq1Feedback');
+    if(isNaN(x)){ fb.className='eq-feedback no'; fb.textContent='Enter a number for x.'; return; }
+    if(Math.abs(x-116)<0.001){
+      fb.className='eq-feedback ok';
+      fb.textContent='🎉 Yes! x = 116°. Two angles on a straight line must sum to 180°, and 64 + 116 = 180 ✓';
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent=`Not quite. If 64 + x = 180, then x = 180 − 64. Try again.`;
+    }
+  }
+  function checkEq2(){
+    const x=parseFloat(document.getElementById('eq2X').value);
+    const fb=document.getElementById('eq2Feedback');
+    if(isNaN(x)){ fb.className='eq-feedback no'; fb.textContent='Enter a number for x.'; return; }
+    if(Math.abs(x-20)<0.001){
+      fb.className='eq-feedback ok';
+      fb.textContent='🎉 Yes! x = 20. Both angles are 3(20) + 15 = 75°. That checks out because vertical angles are equal.';
+    } else {
+      fb.className='eq-feedback no';
+      fb.textContent='Not quite. Rearrange 3x + 15 = 5x − 25 → subtract 3x → 15 = 2x − 25 → add 25 → 40 = 2x.';
+    }
+  }
+
+  // ===== INIT =====
+  window.addEventListener('DOMContentLoaded',()=>{
+    const firstTab=document.querySelector('.tab.a');
+    document.getElementById('panel-a').classList.add('active');
+    document.getElementById('panel-a1').classList.add('active');
+    firstTab.classList.add('active');
+    initProtractor();
+    updateBlockReadout();
+    initCompLab();
+    initSuppLab();
+    initCrossLab();
+  });
+</script>
+</body>
+</html>
